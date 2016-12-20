@@ -19,6 +19,7 @@ void minMaxInt(int *v, int n, int *min, int *max){
             *min = v[i];
         if(v[i] > *max)
             *max = v[i];
+    }
 }
 
 
