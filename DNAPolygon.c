@@ -40,3 +40,30 @@ float crosspoint(int x1, int y1, int x2, int y2, int y){
     n = (float)x1-(float)y1*m;
     return((float)y*m+n);   
 }
+
+/* GETCROSSPOINTS
+ *
+ *  Computes all the crosspoints for a triangle for a y-axis value.
+ *  
+ *  Input:
+ *      t: triangle.
+ *      y: intersection coordinate.
+ *      *cp: vector to save crosspoints.
+ */
+void getCrosspoints(Triangle_t t, int y, float *cp){
+    int i,j;
+    j = 0;
+    for(i=0;i<2;i++){
+        if(t.py[i]==y){
+            cp[j] = t.px[i];
+            j++;
+        }else if((y>t.py[i] && y < t.py[(i+1)%3]) ||
+                 (y<t.py[i] && y > t.py[(i+1)%3])){
+            cp[j] = crosspoint(t.px[i],t.py[i],t.px[(i+1)%3],t.py[(i+1)%3],y);
+            j++;
+        }
+    }
+    /* If only one intersection, count point as two */
+    if(j==1)
+        cp[1] = cp[0];
+}

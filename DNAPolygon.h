@@ -30,3 +30,15 @@ void minMaxInt(int *v, int n, int *min, int *max);
  *  Return: floating point intersection coordinate.
  */
 float crosspoint(int x1, int y1, int x2, int y2, int y);
+
+
+/* GETCROSSPOINTS
+ *
+ *  Computes all the crosspoints for a triangle for a y-axis value.
+ *  
+ *  Input:
+ *      t: triangle.
+ *      y: intersection coordinate.
+ *      *cp: vector to save crosspoints.
+ */
+void getCrosspoints(Triangle_t t, int y, float *cp);
