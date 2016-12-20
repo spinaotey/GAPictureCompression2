@@ -42,3 +42,14 @@ float crosspoint(int x1, int y1, int x2, int y2, int y);
  *      *cp: vector to save crosspoints.
  */
 void getCrosspoints(Triangle_t t, int y, float *cp);
+
+
+/* COMPUTETRIANGLE
+ *
+ *  Computes the inner points of the triangle and saves them into
+ *  the triangle variable
+ *  
+ *  Input:
+ *      *t: triangle pointer to be compued and filled.
+ */
+void computeTriangle(Triangle_t *t);

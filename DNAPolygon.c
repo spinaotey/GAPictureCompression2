@@ -1,4 +1,6 @@
 #include "DNAPolygon.h"
+#include <assert.h>
+#include <stdlib.h>
 
 /*  MINMAXINT
  *
@@ -67,4 +69,34 @@ void getCrosspoints(Triangle_t t, int y, float *cp){
     /* If only one intersection, count point as two */
     if(j==1)
         cp[1] = cp[0];
+}
+
+/* COMPUTETRIANGLE
+ *
+ *  Computes the inner points of the triangle and saves them into
+ *  the triangle variable
+ *  
+ *  Input:
+ *      *t: triangle pointer to be compued and filled.
+ */
+void computeTriangle(Triangle_t *t){
+    int ylim[2];
+    int i,j;
+    float cp[2];
+    t->xFill = malloc(sizeof(int)*50); assert(t->xFill);
+    t->yFill = malloc(sizeof(int)*50); assert(t->yFill);
+    minMaxInt(t->py,3,ylim,ylim+1);
+    t->nFill = 0;
+    for(j=ylim[0];j<=ylim[1];j++){
+        getCrosspoints(*t,j,cp);
+        for(i=cp[0];i<=cp[1];i++){
+            (t->nFill)++;
+            if((t->nFill)%50 == 0){
+                t->xFill = realloc(t->xFill,sizeof(int)*(t->nFill+50)); assert(t->xFill);
+                t->yFill = realloc(t->yFill,sizeof(int)*(t->nFill+50)); assert(t->yFill);
+            }
+            t->xFill[t->nFill-1] = i;
+            t->yFill[t->nFill-1] = j;
+        }
+    }
 }
