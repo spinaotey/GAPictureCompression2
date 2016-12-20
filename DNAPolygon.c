@@ -54,7 +54,7 @@ float crosspoint(int x1, int y1, int x2, int y2, int y){
 void getCrosspoints(Triangle_t t, int y, float *cp){
     int i,j;
     j = 0;
-    for(i=0;i<2;i++){
+    for(i=0;i<3;i++){
         if(t.py[i]==y){
             cp[j] = t.px[i];
             j++;
