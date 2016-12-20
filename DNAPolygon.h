@@ -5,3 +5,28 @@ typedef struct tri{
     int *xFill, *yFill; //Coordinates for filled points
 }Triangle_t;
 
+/*  MINMAXINT
+ *
+ *  Computes the minimum and maximum of an integer vector.
+ *  
+ *  Input:
+ *      *v: pointer of the vector.
+ *      n: length of the vector.
+ *      *min: pointer to save minimum.
+ *      *max: pointer to save maximum.
+ */
+void minMaxInt(int *v, int n, int *min, int *max);
+
+
+/*  CROSSPOINT
+ *
+ *  Computes the intersection of one edge of the polygon at a certain "y"
+ *  coordinate. 
+ *  
+ *  Input:
+ *      x1,y1,x2,y2: coordinates of the vertices of the edge.
+ *      y: intersection coordinate.
+ *
+ *  Return: floating point intersection coordinate.
+ */
+float crosspoint(int x1, int y1, int x2, int y2, int y);
