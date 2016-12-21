@@ -47,7 +47,8 @@ void getCrosspoints(Triangle_t t, int y, float *cp);
 /* COMPUTETRIANGLE
  *
  *  Computes the inner points of the triangle and saves them into
- *  the triangle variable
+ *  the triangle variable. t->x/yfill has to be previously set to
+ *  NULL or allocated or freed before because of free() function.
  *  
  *  Input:
  *      *t: triangle pointer to be compued and filled.

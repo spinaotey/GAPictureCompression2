@@ -74,7 +74,8 @@ void getCrosspoints(Triangle_t t, int y, float *cp){
 /* COMPUTETRIANGLE
  *
  *  Computes the inner points of the triangle and saves them into
- *  the triangle variable
+ *  the triangle variable. t->x/yfill has to be previously set to
+ *  NULL or allocated or freed before because of free() function.
  *  
  *  Input:
  *      *t: triangle pointer to be compued and filled.
@@ -83,6 +84,7 @@ void computeTriangle(Triangle_t *t){
     int ylim[2];
     int i,j;
     float cp[2];
+    free(t->xFill);free(xyFill);
     t->xFill = malloc(sizeof(int)*50); assert(t->xFill);
     t->yFill = malloc(sizeof(int)*50); assert(t->yFill);
     minMaxInt(t->py,3,ylim,ylim+1);
