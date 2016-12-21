@@ -42,3 +42,16 @@ void getCrosspoints(Triangle_t t, int y, float *cp);
  *      *t: triangle pointer to be compued and filled.
  */
 void computeTriangle(Triangle_t *t);
+
+/* MUTATE POINT
+ *
+ *  Computes the inner points of the triangle and saves them into
+ *  the triangle variable. t->x/yfill has to be previously set to
+ *  NULL or allocated or freed before because of free() function.
+ *  
+ *  Input:
+ *      *t: triangle pointer whose random point has to be mutated.
+ *      p: picture properties stucture.
+ *      *seedp: seed to be pased for random number generation.
+ */
+void mutatePoint(Triangle_t *t, Picprop_t p, int *seedp);

@@ -3,6 +3,8 @@
 #include <assert.h>
 #include <stdlib.h>
 
+#define POSBOUND(x,xmax) x < 0 ? 0 : (x >= xmax ? (xmax-1) : x)
+
 /*  CROSSPOINT
  *
  *  Computes the intersection of one edge of the polygon at a certain "y"
@@ -78,4 +80,24 @@ void computeTriangle(Triangle_t *t){
             t->yFill[t->nFill-1] = j;
         }
     }
+}
+
+/* MUTATE POINT
+ *
+ *  Computes the inner points of the triangle and saves them into
+ *  the triangle variable. t->x/yfill has to be previously set to
+ *  NULL or allocated or freed before because of free() function.
+ *  
+ *  Input:
+ *      *t: triangle pointer whose random point has to be mutated.
+ *      p: picture properties stucture.
+ *      *seedp: seed to be pased for random number generation.
+ */
+void mutatePoint(Triangle_t *t, Picprop_t p, int *seedp){
+    int i = randInt_r(seedp,3);
+    double aux;
+    aux = randNorm_r(seedp,0.,p.sdCoords);
+    t->px[i] = (int) POSBOUND((double) (t->px[i]) + aux,p.width);
+    aux = randNorm_r(seedp,0.,p.sdCoords);
+    t->py[i] = (int) POSBOUND((double) (t->py[i]) + aux,p.height);
 }
