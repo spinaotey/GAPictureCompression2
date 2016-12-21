@@ -3,6 +3,9 @@
 #define POW2(x) ((x)*(x))
 #define PI  3.14159265358979323846264338327950288
 
+/**************************************************************************
+ *  RANDOM NUMBERS FUNCTION
+ **************************************************************************/
 
 /*  RANDUNIF_R
  *
@@ -42,3 +45,20 @@ double randStdNorm_r(int *seedp);
  *  Return: standard normal distributed number.
  */
 double randNorm_r(int *seedp, double mean, double sd);
+
+
+/**************************************************************************
+ *  SORTING FUNCTIONS 
+ **************************************************************************/
+
+/*  MINMAXINT
+ *
+ *  Computes the minimum and maximum of an integer vector.
+ *  
+ *  Input:
+ *      *v: pointer of the vector.
+ *      n: length of the vector.
+ *      *min: pointer to save minimum.
+ *      *max: pointer to save maximum.
+ */
+void minMaxInt(int *v, int n, int *min, int *max);

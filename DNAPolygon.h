@@ -5,18 +5,6 @@ typedef struct tri{
     int *xFill, *yFill; //Coordinates for filled points
 }Triangle_t;
 
-/*  MINMAXINT
- *
- *  Computes the minimum and maximum of an integer vector.
- *  
- *  Input:
- *      *v: pointer of the vector.
- *      n: length of the vector.
- *      *min: pointer to save minimum.
- *      *max: pointer to save maximum.
- */
-void minMaxInt(int *v, int n, int *min, int *max);
-
 
 /*  CROSSPOINT
  *

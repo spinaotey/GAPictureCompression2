@@ -1,30 +1,7 @@
 #include "DNAPolygon.h"
+#include "myFunctions.h"
 #include <assert.h>
 #include <stdlib.h>
-
-/*  MINMAXINT
- *
- *  Computes the minimum and maximum of an integer vector.
- *  
- *  Input:
- *      *v: pointer of the vector.
- *      n: length of the vector.
- *      *min: pointer to save minimum.
- *      *max: pointer to save maximum.
- */
-void minMaxInt(int *v, int n, int *min, int *max){
-    int i;
-    *min = v[0];
-    *max = v[0];
-    for(i = 1; i<n; i++){
-        if(v[i] < *min)
-            *min = v[i];
-        if(v[i] > *max)
-            *max = v[i];
-    }
-}
-
-
 
 /*  CROSSPOINT
  *

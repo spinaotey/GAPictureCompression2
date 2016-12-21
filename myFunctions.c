@@ -2,6 +2,11 @@
 #include <math.h>
 #include <stdlib.h>
 
+
+/**************************************************************************
+ *  RANDOM NUMBERS FUNCTION
+ **************************************************************************/
+
 /*  RANDUNIF_R
  *
  *  Returns random uniform number in [0,1) using a given seed.
@@ -48,4 +53,31 @@ double randStdNorm_r(int *seedp){
  */
 double randNorm_r(int *seedp, double mean, double sd){
     return(rndStdNorm_r(seedp)*sd+mean);
+}
+
+/**************************************************************************
+ *  SORTING FUNCTIONS 
+ **************************************************************************/
+
+
+/*  MINMAXINT
+ *
+ *  Computes the minimum and maximum of an integer vector.
+ *  
+ *  Input:
+ *      *v: pointer of the vector.
+ *      n: length of the vector.
+ *      *min: pointer to save minimum.
+ *      *max: pointer to save maximum.
+ */
+void minMaxInt(int *v, int n, int *min, int *max){
+    int i;
+    *min = v[0];
+    *max = v[0];
+    for(i = 1; i<n; i++){
+        if(v[i] < *min)
+            *min = v[i];
+        if(v[i] > *max)
+            *max = v[i];
+    }
 }
