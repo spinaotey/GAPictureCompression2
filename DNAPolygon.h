@@ -3,7 +3,7 @@
 
 typedef struct tri{
     int px[3],py[3];    //Coordinates of vertices
-    char rgba[4];        //Color RGBA
+    unsigned char rgba[4];        //Color RGBA
     int nFill;          //Number of points inside polygon  
     int *xFill, *yFill; //Coordinates for filled points
 }Triangle_t;
@@ -83,4 +83,29 @@ void randomPoint(int *x, int *y, Picprop_t p, unsigned int *seedp);
  *      p: picture properties stucture.
  *      *seedp: seed to be pased for random number generation.
  */
-void mutatePoint2(Triangle_t *t, Picprop_t p, unsigned int *seedp){
+void mutatePoint2(Triangle_t *t, Picprop_t p, unsigned int *seedp);
+
+
+/* MUTATECOLOR
+ *
+ *  Mutates rgba colors of the triangle using a gaussian distribution
+ *  for the displacement.
+ *  
+ *  Input:
+ *      *t: triangle pointer whose color has to be mutated.
+ *      p: picture properties stucture.
+ *      *seedp: seed to be pased for random number generation.
+ */
+void mutateColor(Triangle_t *t, Picprop_t p, unsigned int *seedp);
+
+
+/* MUTATECOLOR2
+ *
+ *  Mutates the color of the triangle, placing it at random.
+ *  
+ *  Input:
+ *      *t: triangle pointer whose color has to be mutated.
+ *      p: picture properties stucture.
+ *      *seedp: seed to be pased for random number generation.
+ */
+void mutateColor2(Triangle_t *t, Picprop_t p, unsigned int *seedp);

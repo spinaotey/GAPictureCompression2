@@ -152,10 +152,10 @@ void mutateColor(Triangle_t *t, Picprop_t p, unsigned int *seedp){
     int i;
     for(i=0; i<3; i++){
         aux = randNorm_r(seedp,0.,p.sdColor);
-        t->rgba[i] = (char) POSBOUND((double) (t->rgba[i]) + aux,256);
+        t->rgba[i] = (unsigned char) POSBOUND((double) (t->rgba[i]) + aux,256);
     }
     aux = randNorm_r(seedp,0.,p.sdColor);
-    t->rgba[3] = (char) POSBOUND((double) (t->rgba[3]) + aux,p.tb);
+    t->rgba[3] = (unsigned char) POSBOUND((double) (t->rgba[3]) + aux,p.tb);
 }
 
 /* MUTATECOLOR2
@@ -170,6 +170,6 @@ void mutateColor(Triangle_t *t, Picprop_t p, unsigned int *seedp){
 void mutateColor2(Triangle_t *t, Picprop_t p, unsigned int *seedp){
     int i;
     for(i=0; i<3; i++)
-        t->rgba[i] = (char) randInt_r(seedp,256);
-    t->rgba[3] = (char) randInt_r(seedp,p.tb);
+        t->rgba[i] = (unsigned char) randInt_r(seedp,256);
+    t->rgba[3] = (unsigned char) randInt_r(seedp,p.tb);
 }

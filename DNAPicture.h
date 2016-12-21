@@ -4,5 +4,5 @@ typedef struct pic{
     int width,height;
     double sdCoords,sdColor;
     double bd;
-    char p.tb;
+    unsigned char tb;
 }Picprop_t;
