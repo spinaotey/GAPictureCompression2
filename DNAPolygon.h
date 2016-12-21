@@ -72,3 +72,15 @@ void mutatePoint(Triangle_t *t, Picprop_t p, unsigned int *seedp);
  *      *seedp: seed to be pased for random number generation.
  */
 void randomPoint(int *x, int *y, Picprop_t p, unsigned int *seedp);
+
+
+/* MUTATEPOINT2
+ *
+ *  Mutates a random point of the triangle, placing it at random.
+ *  
+ *  Input:
+ *      *t: triangle pointer whose random point has to be mutated.
+ *      p: picture properties stucture.
+ *      *seedp: seed to be pased for random number generation.
+ */
+void mutatePoint2(Triangle_t *t, Picprop_t p, unsigned int *seedp){

@@ -86,9 +86,8 @@ void computeTriangle(Triangle_t *t){
 
 /* MUTATEPOINT
  *
- *  Computes the inner points of the triangle and saves them into
- *  the triangle variable. t->x/yfill has to be previously set to
- *  NULL or allocated or freed before because of free() function.
+ *  Mutates a random point of the triangle using a gaussian distribution
+ *  for the displacement.
  *  
  *  Input:
  *      *t: triangle pointer whose random point has to be mutated.
@@ -121,4 +120,18 @@ void randomPoint(int *x, int *y, Picprop_t p, unsigned int *seedp){
     *x = POSBOUND(*x,p.width);
     *y = (int) (randUnif_r(seedp)*p.height*(1.+2.*p.bd)-p.height*p.bd);
     *y = POSBOUND(*y,p.height);
+}
+
+/* MUTATEPOINT2
+ *
+ *  Mutates a random point of the triangle, placing it at random.
+ *  
+ *  Input:
+ *      *t: triangle pointer whose random point has to be mutated.
+ *      p: picture properties stucture.
+ *      *seedp: seed to be pased for random number generation.
+ */
+void mutatePoint2(Triangle_t *t, Picprop_t p, unsigned int *seedp){
+    int i = randInt_r(seedp,3);
+    randomPoint(&(t->px[i]),&(t->py[i]),p,seedp);
 }
