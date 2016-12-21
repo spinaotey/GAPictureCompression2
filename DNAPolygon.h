@@ -125,3 +125,14 @@ void mutateColor2(Triangle_t *t, Picprop_t p, unsigned int *seedp);
  *  Return: initiated random triangle.
  */
 Triangle_t initTriangle(Picprop_t p,unsigned int *seedp, char flag);
+
+/* COPYTRIANGLE
+ *
+ *  Copies a triangle into a new structure, allocating memory if necessary.
+ *
+ *  Input:
+ *      tin: triangle to be copied.
+ *
+ *  Return: copy of triangle.
+ */
+Triangle_t copyTriangle(Triangle_t tin);

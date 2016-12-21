@@ -2,8 +2,9 @@
 #include "DNAPicture.h"
 #include "myFunctions.h"
 #include <assert.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define POSBOUND(x,xmax) x < 0 ? 0 : (x >= xmax ? (xmax-1) : x)
 
@@ -205,4 +206,28 @@ Triangle_t initTriangle(Picprop_t p,unsigned int *seedp, char flag){
     t.xFill = NULL; t.yFill = NULL;
     t.flag = 0;
     return(t);
+}
+
+/* COPYTRIANGLE
+ *
+ *  Copies a triangle into a new structure, allocating memory if necessary.
+ *
+ *  Input:
+ *      tin: triangle to be copied.
+ *
+ *  Return: copy of triangle.
+ */
+Triangle_t copyTriangle(Triangle_t tin){
+    Triangle_t tout;
+    tout = tin;
+    if(tin.flag == 1 && tin.nFill > 0){
+        tout.xFill = (int*) malloc(tin.nFill*sizeof(int)); assert(tout.xFill);
+        tout.yFill = (int*) malloc(tin.nFill*sizeof(int)); assert(tout.yFill);
+        memcpy(tout.xFill,tin.xFill,sizeof(int)*tin.nFill);
+        memcpy(tout.yFill,tin.yFill,sizeof(int)*tin.nFill);
+    }else{
+        tout.nFill = 0;
+        tout.xFill = NULL; tout.yFill = NULL;
+    }
+    return(tout);
 }
