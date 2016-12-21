@@ -1,7 +1,7 @@
 #pragma once
 #include "DNAPicture.h"
 
-typedef struct tri{
+typedef struct{
     int px[3],py[3];    //Coordinates of vertices
     unsigned char rgba[4];        //Color RGBA
     int nFill;          //Number of points inside polygon  
