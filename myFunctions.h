@@ -46,6 +46,17 @@ double randStdNorm_r(int *seedp);
  */
 double randNorm_r(int *seedp, double mean, double sd);
 
+/*  RANDINT_R
+ *
+ *  Returns random integer from 0 to n-1.
+ *
+ *  Input:
+ *      *seedp: pointer to seed which is modified.
+ *      n: upper limit for integers (not included).
+ *
+ *  Return: random integer from 0 to n-1.
+ */
+int randInt_r(int *seedp, int n);
 
 /**************************************************************************
  *  SORTING FUNCTIONS 
