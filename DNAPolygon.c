@@ -135,3 +135,41 @@ void mutatePoint2(Triangle_t *t, Picprop_t p, unsigned int *seedp){
     int i = randInt_r(seedp,3);
     randomPoint(&(t->px[i]),&(t->py[i]),p,seedp);
 }
+
+
+/* MUTATECOLOR
+ *
+ *  Mutates rgba colors of the triangle using a gaussian distribution
+ *  for the displacement.
+ *  
+ *  Input:
+ *      *t: triangle pointer whose color has to be mutated.
+ *      p: picture properties stucture.
+ *      *seedp: seed to be pased for random number generation.
+ */
+void mutateColor(Triangle_t *t, Picprop_t p, unsigned int *seedp){
+    double aux;
+    int i;
+    for(i=0; i<3; i++){
+        aux = randNorm_r(seedp,0.,p.sdColor);
+        t->rgba[i] = (char) POSBOUND((double) (t->rgba[i]) + aux,256);
+    }
+    aux = randNorm_r(seedp,0.,p.sdColor);
+    t->rgba[3] = (char) POSBOUND((double) (t->rgba[3]) + aux,p.tb);
+}
+
+/* MUTATECOLOR2
+ *
+ *  Mutates the color of the triangle, placing it at random.
+ *  
+ *  Input:
+ *      *t: triangle pointer whose color has to be mutated.
+ *      p: picture properties stucture.
+ *      *seedp: seed to be pased for random number generation.
+ */
+void mutateColor2(Triangle_t *t, Picprop_t p, unsigned int *seedp){
+    int i;
+    for(i=0; i<3; i++)
+        t->rgba[i] = (char) randInt_r(seedp,256);
+    t->rgba[3] = (char) randInt_r(seedp,p.tb);
+}
