@@ -82,6 +82,7 @@ void computeTriangle(Triangle_t *t){
             t->yFill[t->nFill-1] = j;
         }
     }
+    t->flag = 1;
 }
 
 /* MUTATEPOINT
@@ -92,7 +93,7 @@ void computeTriangle(Triangle_t *t){
  *  Input:
  *      *t: triangle pointer whose random point has to be mutated.
  *      p: picture properties stucture.
- *      *seedp: seed to be pased for random number generation.
+ *      *seedp: seed to be passed for random number generation.
  */
 void mutatePoint(Triangle_t *t, Picprop_t p, unsigned int *seedp){
     int i = randInt_r(seedp,3);
@@ -101,6 +102,7 @@ void mutatePoint(Triangle_t *t, Picprop_t p, unsigned int *seedp){
     t->px[i] = (int) POSBOUND((double) (t->px[i]) + aux,p.width);
     aux = randNorm_r(seedp,0.,p.sdCoords);
     t->py[i] = (int) POSBOUND((double) (t->py[i]) + aux,p.height);
+    t->flag = 0;
 }
 
 /* RANDOMPOINT
@@ -113,7 +115,7 @@ void mutatePoint(Triangle_t *t, Picprop_t p, unsigned int *seedp){
  *      *x: x-coordinate to generate randomly.
  *      *y: y-coordinate to generate randomly.
  *      p: picture properties stucture.
- *      *seedp: seed to be pased for random number generation.
+ *      *seedp: seed to be passed for random number generation.
  */
 void randomPoint(int *x, int *y, Picprop_t p, unsigned int *seedp){
     *x = (int) (randUnif_r(seedp)*p.width*(1.+2.*p.bd)-p.width*p.bd);
@@ -129,11 +131,12 @@ void randomPoint(int *x, int *y, Picprop_t p, unsigned int *seedp){
  *  Input:
  *      *t: triangle pointer whose random point has to be mutated.
  *      p: picture properties stucture.
- *      *seedp: seed to be pased for random number generation.
+ *      *seedp: seed to be passed for random number generation.
  */
 void mutatePoint2(Triangle_t *t, Picprop_t p, unsigned int *seedp){
     int i = randInt_r(seedp,3);
     randomPoint(&(t->px[i]),&(t->py[i]),p,seedp);
+    t->flag = 0;
 }
 
 
@@ -145,7 +148,7 @@ void mutatePoint2(Triangle_t *t, Picprop_t p, unsigned int *seedp){
  *  Input:
  *      *t: triangle pointer whose color has to be mutated.
  *      p: picture properties stucture.
- *      *seedp: seed to be pased for random number generation.
+ *      *seedp: seed to be passed for random number generation.
  */
 void mutateColor(Triangle_t *t, Picprop_t p, unsigned int *seedp){
     double aux;
@@ -165,11 +168,41 @@ void mutateColor(Triangle_t *t, Picprop_t p, unsigned int *seedp){
  *  Input:
  *      *t: triangle pointer whose color has to be mutated.
  *      p: picture properties stucture.
- *      *seedp: seed to be pased for random number generation.
+ *      *seedp: seed to be passed for random number generation.
  */
 void mutateColor2(Triangle_t *t, Picprop_t p, unsigned int *seedp){
     int i;
     for(i=0; i<3; i++)
         t->rgba[i] = (unsigned char) randInt_r(seedp,256);
     t->rgba[3] = (unsigned char) randInt_r(seedp,p.tb);
+}
+
+
+/*  INITTRIANGLE
+ *
+ *  Creates triangle structure and initiates its coordinates
+ *  and colors. Flag indicates whether colors are chosen at
+ *  random or all to black, with zero transparency.
+ *
+ *  Input:
+ *      p: picture properties.
+ *      *seedp: seed to be passed for random number generation.
+ *      flag: 0 all are set to black, else random color.
+ *
+ *  Return: initiated random triangle.
+ */
+Triangle_t initTriangle(Picprop_t p,unsigned int *seedp, char flag){
+    Triangle_t t;
+    int i;
+    for(i=0;i<3;i++)
+        randomPoint(t.px+i,t.py+i,p,seedp);
+    if(flag == 0)
+        for(i=0;i<4;i++)
+            t.rgba[i] = 0;
+    else
+        mutateColor2(&t,p,seedp);
+    t.nFill = 0;
+    t.xFill = NULL; t.yFill = NULL;
+    t.flag = 0;
+    return(t);
 }

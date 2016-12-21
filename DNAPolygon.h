@@ -6,6 +6,7 @@ typedef struct tri{
     unsigned char rgba[4];        //Color RGBA
     int nFill;          //Number of points inside polygon  
     int *xFill, *yFill; //Coordinates for filled points
+    char flag; // flag wheter inner points are computed or not
 }Triangle_t;
 
 
@@ -55,7 +56,7 @@ void computeTriangle(Triangle_t *t);
  *  Input:
  *      *t: triangle pointer whose random point has to be mutated.
  *      p: picture properties stucture.
- *      *seedp: seed to be pased for random number generation.
+ *      *seedp: seed to be passed for random number generation.
  */
 void mutatePoint(Triangle_t *t, Picprop_t p, unsigned int *seedp);
 
@@ -69,7 +70,7 @@ void mutatePoint(Triangle_t *t, Picprop_t p, unsigned int *seedp);
  *      *x: x-coordinate to generate randomly.
  *      *y: y-coordinate to generate randomly.
  *      p: picture properties stucture.
- *      *seedp: seed to be pased for random number generation.
+ *      *seedp: seed to be passed for random number generation.
  */
 void randomPoint(int *x, int *y, Picprop_t p, unsigned int *seedp);
 
@@ -81,7 +82,7 @@ void randomPoint(int *x, int *y, Picprop_t p, unsigned int *seedp);
  *  Input:
  *      *t: triangle pointer whose random point has to be mutated.
  *      p: picture properties stucture.
- *      *seedp: seed to be pased for random number generation.
+ *      *seedp: seed to be passed for random number generation.
  */
 void mutatePoint2(Triangle_t *t, Picprop_t p, unsigned int *seedp);
 
@@ -94,7 +95,7 @@ void mutatePoint2(Triangle_t *t, Picprop_t p, unsigned int *seedp);
  *  Input:
  *      *t: triangle pointer whose color has to be mutated.
  *      p: picture properties stucture.
- *      *seedp: seed to be pased for random number generation.
+ *      *seedp: seed to be passed for random number generation.
  */
 void mutateColor(Triangle_t *t, Picprop_t p, unsigned int *seedp);
 
@@ -106,6 +107,21 @@ void mutateColor(Triangle_t *t, Picprop_t p, unsigned int *seedp);
  *  Input:
  *      *t: triangle pointer whose color has to be mutated.
  *      p: picture properties stucture.
- *      *seedp: seed to be pased for random number generation.
+ *      *seedp: seed to be passed for random number generation.
  */
 void mutateColor2(Triangle_t *t, Picprop_t p, unsigned int *seedp);
+
+/*  INITTRIANGLE
+ *
+ *  Creates triangle structure and initiates its coordinates
+ *  and colors. Flag indicates whether colors are chosen at
+ *  random or all to black, with zero transparency.
+ *
+ *  Input:
+ *      p: picture properties.
+ *      *seedp: seed to be passed for random number generation.
+ *      flag: 0 all are set to black, else random color.
+ *
+ *  Return: initiated random triangle.
+ */
+Triangle_t initTriangle(Picprop_t p,unsigned int *seedp, char flag);
