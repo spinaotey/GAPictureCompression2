@@ -3,6 +3,7 @@
 #include "myFunctions.h"
 #include <assert.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #define POSBOUND(x,xmax) x < 0 ? 0 : (x >= xmax ? (xmax-1) : x)
 
@@ -116,6 +117,8 @@ void mutatePoint(Triangle_t *t, Picprop_t p, unsigned int *seedp){
  *      *seedp: seed to be pased for random number generation.
  */
 void randomPoint(int *x, int *y, Picprop_t p, unsigned int *seedp){
-    *x = (int) POSBOUND(randUnif_r(seedp)*p.width*(1.+2.*p.bd)-p.bd,p.width);
-    *y = (int) POSBOUND(randUnif_r(seedp)*p.height*(1.+2.*p.bd)-p.bd,p.height);
+    *x = (int) (randUnif_r(seedp)*p.width*(1.+2.*p.bd)-p.width*p.bd);
+    *x = POSBOUND(*x,p.width);
+    *y = (int) (randUnif_r(seedp)*p.height*(1.+2.*p.bd)-p.height*p.bd);
+    *y = POSBOUND(*y,p.height);
 }
