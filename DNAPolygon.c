@@ -1,4 +1,5 @@
 #include "DNAPolygon.h"
+#include "DNAPicture.h"
 #include "myFunctions.h"
 #include <assert.h>
 #include <stdlib.h>
@@ -63,7 +64,7 @@ void computeTriangle(Triangle_t *t){
     int ylim[2];
     int i,j;
     float cp[2];
-    free(t->xFill);free(xyFill);
+    free(t->xFill);free(t->yFill);
     t->xFill = malloc(sizeof(int)*50); assert(t->xFill);
     t->yFill = malloc(sizeof(int)*50); assert(t->yFill);
     minMaxInt(t->py,3,ylim,ylim+1);
@@ -82,7 +83,7 @@ void computeTriangle(Triangle_t *t){
     }
 }
 
-/* MUTATE POINT
+/* MUTATEPOINT
  *
  *  Computes the inner points of the triangle and saves them into
  *  the triangle variable. t->x/yfill has to be previously set to
@@ -93,11 +94,28 @@ void computeTriangle(Triangle_t *t){
  *      p: picture properties stucture.
  *      *seedp: seed to be pased for random number generation.
  */
-void mutatePoint(Triangle_t *t, Picprop_t p, int *seedp){
+void mutatePoint(Triangle_t *t, Picprop_t p, unsigned int *seedp){
     int i = randInt_r(seedp,3);
     double aux;
     aux = randNorm_r(seedp,0.,p.sdCoords);
     t->px[i] = (int) POSBOUND((double) (t->px[i]) + aux,p.width);
     aux = randNorm_r(seedp,0.,p.sdCoords);
     t->py[i] = (int) POSBOUND((double) (t->py[i]) + aux,p.height);
+}
+
+/* RANDOMPOINT
+ *
+ *  Computes random x and y coordinates inside the picture. There is a certain
+ *  margin to get outside the picture given by p.bd on both sides, and the
+ *  point is relocated at the margin.
+ *  
+ *  Input:
+ *      *x: x-coordinate to generate randomly.
+ *      *y: y-coordinate to generate randomly.
+ *      p: picture properties stucture.
+ *      *seedp: seed to be pased for random number generation.
+ */
+void randomPoint(int *x, int *y, Picprop_t p, unsigned int *seedp){
+    *x = (int) POSBOUND(randUnif_r(seedp)*p.width*(1.+2.*p.bd)-p.bd,p.width);
+    *y = (int) POSBOUND(randUnif_r(seedp)*p.height*(1.+2.*p.bd)-p.bd,p.height);
 }

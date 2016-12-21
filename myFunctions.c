@@ -16,8 +16,8 @@
  *
  *  Return: uniform number in [0,1).
  */
-double randUnif_r(int *seedp){
-    unsigned int m = RAND_MAX+1;
+double randUnif_r(unsigned int *seedp){
+    unsigned int m = (unsigned int)RAND_MAX + 1;
     return((double) rand_r(seedp)/(double) m);
 }
 
@@ -31,7 +31,7 @@ double randUnif_r(int *seedp){
  *
  *  Return: standard normal distributed number.
  */
-double randStdNorm_r(int *seedp){
+double randStdNorm_r(unsigned int *seedp){
     double u1,u2;
     u1 = randUnif_r(seedp);
     u2 = randUnif_r(seedp);
@@ -51,8 +51,8 @@ double randStdNorm_r(int *seedp){
  *
  *  Return: standard normal distributed number.
  */
-double randNorm_r(int *seedp, double mean, double sd){
-    return(rndStdNorm_r(seedp)*sd+mean);
+double randNorm_r(unsigned int *seedp, double mean, double sd){
+    return(randStdNorm_r(seedp)*sd+mean);
 }
 
 /*  RANDINT_R
@@ -65,7 +65,7 @@ double randNorm_r(int *seedp, double mean, double sd){
  *
  *  Return: random integer from 0 to n-1.
  */
-int randInt_r(int *seedp, int n){
+int randInt_r(unsigned int *seedp, int n){
     return((int)floor(randUnif_r(seedp)*n));
 }
 

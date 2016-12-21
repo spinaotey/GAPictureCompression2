@@ -1,3 +1,4 @@
+#pragma once
 #define POW2(x) ((x)*(x))
 #define POW2(x) ((x)*(x))
 #define POW2(x) ((x)*(x))
@@ -16,7 +17,7 @@
  *
  *  Return: uniform number in [0,1).
  */
-double randUnif_r(int *seedp);
+double randUnif_r(unsigned int *seedp);
 
 
 /*  RANDSTDNORM_R
@@ -29,7 +30,7 @@ double randUnif_r(int *seedp);
  *
  *  Return: standard normal distributed number.
  */
-double randStdNorm_r(int *seedp);
+double randStdNorm_r(unsigned int *seedp);
 
 
 /*  RANDNORM_R
@@ -44,7 +45,7 @@ double randStdNorm_r(int *seedp);
  *
  *  Return: standard normal distributed number.
  */
-double randNorm_r(int *seedp, double mean, double sd);
+double randNorm_r(unsigned int *seedp, double mean, double sd);
 
 /*  RANDINT_R
  *
@@ -56,7 +57,7 @@ double randNorm_r(int *seedp, double mean, double sd);
  *
  *  Return: random integer from 0 to n-1.
  */
-int randInt_r(int *seedp, int n);
+int randInt_r(unsigned int *seedp, int n);
 
 /**************************************************************************
  *  SORTING FUNCTIONS 

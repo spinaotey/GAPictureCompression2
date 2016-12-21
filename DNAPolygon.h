@@ -1,3 +1,6 @@
+#pragma once
+#include "DNAPicture.h"
+
 typedef struct tri{
     int px[3],py[3];    //Coordinates of vertices
     char rgba[4];        //Color RGBA
@@ -54,4 +57,18 @@ void computeTriangle(Triangle_t *t);
  *      p: picture properties stucture.
  *      *seedp: seed to be pased for random number generation.
  */
-void mutatePoint(Triangle_t *t, Picprop_t p, int *seedp);
+void mutatePoint(Triangle_t *t, Picprop_t p, unsigned int *seedp);
+
+/* RANDOMPOINT
+ *
+ *  Computes random x and y coordinates inside the picture. There is a certain
+ *  margin to get outside the picture given by p.bd on both sides, and the
+ *  point is relocated at the margin.
+ *  
+ *  Input:
+ *      *x: x-coordinate to generate randomly.
+ *      *y: y-coordinate to generate randomly.
+ *      p: picture properties stucture.
+ *      *seedp: seed to be pased for random number generation.
+ */
+void randomPoint(int *x, int *y, Picprop_t p, unsigned int *seedp);
