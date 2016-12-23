@@ -1,7 +1,7 @@
 #pragma once
 #include "DNAPicture.h"
 
-typedef struct{
+typedef struct Triangle_s{
     int px[3],py[3];    //Coordinates of vertices
     unsigned char rgba[4];        //Color RGBA
     int nFill;          //Number of points inside polygon  
@@ -9,6 +9,7 @@ typedef struct{
     char flag; // flag wheter inner points are computed or not
 }Triangle_t;
 
+typedef struct Picprop_s Picprop_t;
 
 /*  CROSSPOINT
  *
