@@ -40,3 +40,28 @@ void makePicture(PicGen_t *pic){
 #undef R
 #undef G
 #undef B
+
+/*  GETFINTESS
+ * 
+ *  Computes fitness as the square difference in RGB channesl
+ *  between target picture and PicGen.
+ *
+ *  Input:
+ *      pic: picture fitness to be computed.
+ *      tar: target picture struture.
+ *
+ *  Return: Fitness value.
+ */
+long getFitness(PicGen_t pic, Picprop_t tar){
+    int i;
+    long fitness,d;
+    for(i=0;i<(pic.width*pic.height);i++){
+        d = tar.r[i] - pic.r[i];
+        fitness += POW2(d);
+        d = tar.g[i] - pic.g[i];
+        fitness += POW2(d);
+        d = tar.b[i] - pic.b[i];
+        fitness += POW2(d);
+    }
+    return fitness;
+}

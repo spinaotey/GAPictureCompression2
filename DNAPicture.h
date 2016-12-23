@@ -30,3 +30,16 @@ typedef struct Picprop_s{
  *      *pic: Pointer to picture to be made.
  */
 void makePicture(PicGen_t *pic);
+
+/*  GETFINTESS
+ * 
+ *  Computes fitness as the square difference in RGB channesl
+ *  between target picture and PicGen.
+ *
+ *  Input:
+ *      pic: picture fitness to be computed.
+ *      tar: target picture struture.
+ *
+ *  Return: Fitness value.
+ */
+long getFitness(PicGen_t pic, Picprop_t tar){
