@@ -66,24 +66,26 @@ void computeTriangle(Triangle_t *t){
     int ylim[2];
     int i,j;
     float cp[2];
-    free(t->xFill);free(t->yFill);
-    t->xFill = malloc(sizeof(int)*50); assert(t->xFill);
-    t->yFill = malloc(sizeof(int)*50); assert(t->yFill);
-    minMaxInt(t->py,3,ylim,ylim+1);
-    t->nFill = 0;
-    for(j=ylim[0];j<=ylim[1];j++){
-        getCrosspoints(*t,j,cp);
-        for(i=cp[0];i<=cp[1];i++){
-            (t->nFill)++;
-            if((t->nFill)%50 == 0){
-                t->xFill = realloc(t->xFill,sizeof(int)*(t->nFill+50)); assert(t->xFill);
-                t->yFill = realloc(t->yFill,sizeof(int)*(t->nFill+50)); assert(t->yFill);
+    if (t->flag != 1){
+        free(t->xFill);free(t->yFill);
+        t->xFill = malloc(sizeof(int)*50); assert(t->xFill);
+        t->yFill = malloc(sizeof(int)*50); assert(t->yFill);
+        minMaxInt(t->py,3,ylim,ylim+1);
+        t->nFill = 0;
+        for(j=ylim[0];j<=ylim[1];j++){
+            getCrosspoints(*t,j,cp);
+            for(i=cp[0];i<=cp[1];i++){
+                (t->nFill)++;
+                if((t->nFill)%50 == 0){
+                    t->xFill = realloc(t->xFill,sizeof(int)*(t->nFill+50)); assert(t->xFill);
+                    t->yFill = realloc(t->yFill,sizeof(int)*(t->nFill+50)); assert(t->yFill);
+                }
+                t->xFill[t->nFill-1] = i;
+                t->yFill[t->nFill-1] = j;
             }
-            t->xFill[t->nFill-1] = i;
-            t->yFill[t->nFill-1] = j;
         }
+        t->flag = 1;
     }
-    t->flag = 1;
 }
 
 /* MUTATEPOINT
@@ -221,8 +223,8 @@ Triangle_t copyTriangle(Triangle_t tin){
     Triangle_t tout;
     tout = tin;
     if(tin.flag == 1 && tin.nFill > 0){
-        tout.xFill = (int*) malloc(tin.nFill*sizeof(int)); assert(tout.xFill);
-        tout.yFill = (int*) malloc(tin.nFill*sizeof(int)); assert(tout.yFill);
+        tout.xFill = malloc(tin.nFill*sizeof(int)); assert(tout.xFill);
+        tout.yFill = malloc(tin.nFill*sizeof(int)); assert(tout.yFill);
         memcpy(tout.xFill,tin.xFill,sizeof(int)*tin.nFill);
         memcpy(tout.yFill,tin.yFill,sizeof(int)*tin.nFill);
     }else{
@@ -230,4 +232,24 @@ Triangle_t copyTriangle(Triangle_t tin){
         tout.xFill = NULL; tout.yFill = NULL;
     }
     return(tout);
+}
+
+/* COPYTRIANGLE2
+ *
+ *  Copies a triangles from input to output.
+ *
+ *  Input:
+ *      *tin: triangle to be copied.
+ *      *tout: triangle copying destination.
+ */
+Triangle_t copyTriangle(Triangle_t tin){
+void copyTriangle2(Triangle_t *tin, Triangle_t *tout){
+    if(tout->flag == 1 && tout->nFill > 0){
+        free(tout->xFill); free(tout->yFill);
+    }
+    *tout = *tin;
+    tout->xFill = malloc(tin->nFill*sizeof(int)); assert(tout->xFill);
+    tout->yFill = malloc(tin->nFill*sizeof(int)); assert(tout->yFill);
+    memcpy(tout->xFill,tin->xfill,sizeof(int)*(tin->nFill));
+    memcpy(tout->yFill,tin->yfill,sizeof(int)*(tin->nFill));
 }

@@ -137,3 +137,13 @@ Triangle_t initTriangle(Picprop_t p,unsigned int *seedp, char flag);
  *  Return: copy of triangle.
  */
 Triangle_t copyTriangle(Triangle_t tin);
+
+/* COPYTRIANGLE2
+ *
+ *  Copies a triangles from input to output.
+ *
+ *  Input:
+ *      *tin: triangle to be copied.
+ *      *tout: triangle copying destination.
+ */
+Triangle_t copyTriangle(Triangle_t tin);
