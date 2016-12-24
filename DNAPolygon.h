@@ -146,4 +146,4 @@ Triangle_t copyTriangle(Triangle_t tin);
  *      *tin: triangle to be copied.
  *      *tout: triangle copying destination.
  */
-Triangle_t copyTriangle(Triangle_t tin);
+void copyTriangle2(Triangle_t *tin, Triangle_t *tout);

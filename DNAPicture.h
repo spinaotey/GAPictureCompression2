@@ -42,4 +42,4 @@ void makePicture(PicGen_t *pic);
  *
  *  Return: Fitness value.
  */
-long getFitness(PicGen_t pic, Picprop_t tar){
+long getFitness(PicGen_t pic, Picprop_t tar);

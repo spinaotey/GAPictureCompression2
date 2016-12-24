@@ -242,7 +242,6 @@ Triangle_t copyTriangle(Triangle_t tin){
  *      *tin: triangle to be copied.
  *      *tout: triangle copying destination.
  */
-Triangle_t copyTriangle(Triangle_t tin){
 void copyTriangle2(Triangle_t *tin, Triangle_t *tout){
     if(tout->flag == 1 && tout->nFill > 0){
         free(tout->xFill); free(tout->yFill);
@@ -250,6 +249,6 @@ void copyTriangle2(Triangle_t *tin, Triangle_t *tout){
     *tout = *tin;
     tout->xFill = malloc(tin->nFill*sizeof(int)); assert(tout->xFill);
     tout->yFill = malloc(tin->nFill*sizeof(int)); assert(tout->yFill);
-    memcpy(tout->xFill,tin->xfill,sizeof(int)*(tin->nFill));
-    memcpy(tout->yFill,tin->yfill,sizeof(int)*(tin->nFill));
+    memcpy(tout->xFill,tin->xFill,sizeof(int)*(tin->nFill));
+    memcpy(tout->yFill,tin->yFill,sizeof(int)*(tin->nFill));
 }

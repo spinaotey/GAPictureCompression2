@@ -1,5 +1,6 @@
 #include "DNAPicture.h"
 #include "DNAPolygon.h"
+#include "myFunctions.h"
 
 
 /*  MAKEPICTURE
@@ -55,6 +56,7 @@ void makePicture(PicGen_t *pic){
 long getFitness(PicGen_t pic, Picprop_t tar){
     int i;
     long fitness,d;
+    fitness = 0;
     for(i=0;i<(pic.width*pic.height);i++){
         d = tar.r[i] - pic.r[i];
         fitness += POW2(d);
@@ -63,5 +65,5 @@ long getFitness(PicGen_t pic, Picprop_t tar){
         d = tar.b[i] - pic.b[i];
         fitness += POW2(d);
     }
-    return fitness;
+    return(fitness);
 }
