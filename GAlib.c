@@ -26,3 +26,28 @@ void crossover(PicGen_t *p1,PicGen_t *p2,PicGen_t *c1,PicGen_t *c2, int j){
         copyTriangle2(&((p2->poly)[i]),&((c1->poly)[i]));
     }
 }
+
+
+/*  TOURNAMENT
+ *
+ *  Tournament of nTour participants with repetition to select argument of
+ *  best fitness (smallest).
+ *
+ *  Input:
+ *      *v: vector of fitness.
+ *      *nv: length of vector.
+ *      nTour: number of tournament participants.
+ *      *seedp: random number generator seed.
+ *
+ *  Return: argument of winner of the tournament.
+ */
+int tournament(long *v, int nv, int nTour,unsigned int *seedp){
+    int min,i,j;
+    min = randInt_r(seedp,nv);
+    for(i=1;i<nTour;i++){
+        j = randInt_r(seedp,nv);
+        if(v[j]< v[min])
+            min = j;
+    }
+    return(min);
+}

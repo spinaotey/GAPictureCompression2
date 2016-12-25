@@ -95,3 +95,41 @@ void minMaxInt(int *v, int n, int *min, int *max){
             *max = v[i];
     }
 }
+
+/*  ARGSMINLONG
+ *
+ *  Finds the arguments of the nargs smalles values and stores those
+ *  arguments in args.
+ *  
+ *  Input:
+ *      *v: vector with values to find their arguments.
+ *      nv: length of v.
+ *      args: vector to store arguments in order.
+ *      nargs: number of arguments to store in args.
+ */
+void argsMinLong(long *v, int nv, int *args, int nargs){
+    int i,j,k;
+    args[0] = 0;
+    for(i=1;i<nargs;i++){
+        args[i] = i;
+        for(j=i-1;j>=0; j--){
+            if(v[args[j]] <= v[args[j+1]])
+                break;
+            k = args[j];
+            args[j] = args[j+1];
+            args[j+1] = k;
+        }
+    }
+    for(i=nargs;i<nv;i++){
+        if(v[i] < v[args[nargs-1]]){
+            args[nargs-1] = i;
+            for(j=nargs-2; j>=0; j--){
+                if(v[args[j]] <= v[args[j+1]])
+                    break;
+                k = args[j];
+                args[j] = args[j+1];
+                args[j+1] = k;
+            }
+        }
+    }
+}

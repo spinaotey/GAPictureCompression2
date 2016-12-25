@@ -16,3 +16,18 @@ typedef struct PicGen_s PicGen_t;
  *      *c2: pointer to second child.
  */
 void crossover(PicGen_t *p1,PicGen_t *p2,PicGen_t *c1,PicGen_t *c2, int j);
+
+/*  TOURNAMENT
+ *
+ *  Tournament of nTour participants with repetition to select argument of
+ *  best fitness (smallest).
+ *
+ *  Input:
+ *      *v: vector of fitness.
+ *      *nv: length of vector.
+ *      nTour: number of tournament participants.
+ *      *seedp: random number generator seed.
+ *
+ *  Return: argument of winner of the tournament.
+ */
+int tournament(long *v, int nv, int nTour,unsigned int *seedp);

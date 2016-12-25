@@ -72,3 +72,16 @@ int randInt_r(unsigned int *seedp, int n);
  *      *max: pointer to save maximum.
  */
 void minMaxInt(int *v, int n, int *min, int *max);
+
+/*  ARGSMINLONG
+ *
+ *  Finds the arguments of the nargs smalles values and stores those
+ *  arguments in args.
+ *  
+ *  Input:
+ *      *v: vector with values to find their arguments.
+ *      nv: length of v.
+ *      args: vector to store arguments in order.
+ *      nargs: number of arguments to store in args.
+ */
+void argsMinLong(long *v, int nv, int *args, int nargs);
