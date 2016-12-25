@@ -43,3 +43,13 @@ void makePicture(PicGen_t *pic);
  *  Return: Fitness value.
  */
 long getFitness(PicGen_t pic, Picprop_t tar);
+
+/* COPYPICGEN
+ *
+ *  Copies a PicGen from input to output.
+ *
+ *  Input:
+ *      *pin: PicGen to be copied.
+ *      *pout: PicGen copying destination.
+ */
+void copyPicGen(PicGen_t *pin, PicGen_t *pout);

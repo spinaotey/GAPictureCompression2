@@ -1,7 +1,7 @@
 #include "DNAPicture.h"
 #include "DNAPolygon.h"
 #include "myFunctions.h"
-
+#include "string.h"
 
 /*  MAKEPICTURE
  * 
@@ -66,4 +66,22 @@ long getFitness(PicGen_t pic, Picprop_t tar){
         fitness += POW2(d);
     }
     return(fitness);
+}
+
+/* COPYPICGEN
+ *
+ *  Copies a PicGen from input to output.
+ *
+ *  Input:
+ *      *pin: PicGen to be copied.
+ *      *pout: PicGen copying destination.
+ */
+void copyPicGen(PicGen_t *pin, PicGen_t *pout){
+    int i;
+    memcpy(pout->r, pin->r,sizeof(unsigned char)*(pin->width)*(pin->height));
+    memcpy(pout->g, pin->g,sizeof(unsigned char)*(pin->width)*(pin->height));
+    memcpy(pout->b, pin->b,sizeof(unsigned char)*(pin->width)*(pin->height));
+    pout->fitness = pin->fitness;
+    for(i=0; i<(pin->npoly);i++)
+        copyTriangle2(&((pin->poly)[i]),&((pout->poly)[i]));
 }
