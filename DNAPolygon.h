@@ -50,9 +50,8 @@ void computeTriangle(Triangle_t *t);
 
 /* MUTATE POINT
  *
- *  Computes the inner points of the triangle and saves them into
- *  the triangle variable. t->x/yfill has to be previously set to
- *  NULL or allocated or freed before because of free() function.
+ *  Mutates a random point of the triangle using a gaussian distribution
+ *  for the displacement.
  *  
  *  Input:
  *      *t: triangle pointer whose random point has to be mutated.

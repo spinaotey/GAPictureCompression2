@@ -85,3 +85,41 @@ void copyPicGen(PicGen_t *pin, PicGen_t *pout){
     for(i=0; i<(pin->npoly);i++)
         copyTriangle2(&((pin->poly)[i]),&((pout->poly)[i]));
 }
+
+/*  MUTATEPICGEN
+ *
+ *  Mutates PicGen, changing nMutate polygons, either by mutating color,
+ *  vertex position or position of the polygon within the picture.
+ *
+ *  Input:
+ *      *pic: PicGen to be mutated.
+ *      p: PicProp with the necessary conditions for the mutation.
+ *      *seedp: seed for random number generation.
+ */ 
+void mutatePicGen(PicGen_t *pic, Picprop_t p, unsigned int *seedp){
+    int i,j,k,m,n;
+    Triangle_t taux;
+    taux.flag = 0;
+    for(i=0; i <p.nMutate;i++){
+        j = randInt_r(seedp,3);
+        k = randInt_r(seedp,pic->npoly);
+        if(j==0)
+            mutateColor(&((pic->poly)[k]),p,seedp);
+        else if(j==1)
+            mutatePoint(&((pic->poly)[k]),p,seedp);
+        else{
+            m = randInt_r(seedp,pic->npoly);
+            if(m>k){
+                copyTriangle2(&((pic->poly)[k]),&taux);
+                for(n=k+1;n<=m;n++)
+                    copyTriangle2(&((pic->poly)[n]),&((pic->poly)[n-1]));
+                copyTriangle2(&taux,&((pic->poly)[m]));
+            }else if(m<k){
+                copyTriangle2(&((pic->poly)[k]),&taux);
+                for(n=k-1;n>=m;n--)
+                    copyTriangle2(&((pic->poly)[n]),&((pic->poly)[n+1]));
+                copyTriangle2(&taux,&((pic->poly)[m]));
+            }
+        }
+    }
+}

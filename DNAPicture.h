@@ -17,6 +17,7 @@ typedef struct Picprop_s{
     double sdCoords,sdColor;//Standard deviation of coordinates and color mutations
     double bd;              //bound differential
     unsigned char tb;       //transparency bound
+    int nMutate;            //number of polygons to mutate each time
 }Picprop_t;
 
 
@@ -53,3 +54,15 @@ long getFitness(PicGen_t pic, Picprop_t tar);
  *      *pout: PicGen copying destination.
  */
 void copyPicGen(PicGen_t *pin, PicGen_t *pout);
+
+/*  MUTATEPICGEN
+ *
+ *  Mutates PicGen, changing nMutate polygons, either by mutating color,
+ *  vertex position or position of the polygon within the picture.
+ *
+ *  Input:
+ *      *pic: PicGen to be mutated.
+ *      p: PicProp with the necessary conditions for the mutation.
+ *      *seedp: seed for random number generation.
+ */ 
+void mutatePicGen(PicGen_t *pic, Picprop_t p, unsigned int *seedp);
