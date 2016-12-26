@@ -26,6 +26,8 @@ void makePicture(PicGen_t *pic){
         pic->b[i] = pic->bgrgb[2];
     }
     for(i=0;i<(pic->npoly);i++){
+        if((pic->poly)[i].flag == 0)
+            computeTriangle(&((pic->poli)[i]));
         rgba = (pic->poly[i]).rgba;
         alpha = (float) rgba[3]/255.f;
         beta = 1.f-alpha;
