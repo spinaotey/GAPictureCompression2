@@ -113,18 +113,17 @@ void mutateColor2(Triangle_t *t, Picprop_t p, unsigned int *seedp);
 
 /*  INITTRIANGLE
  *
- *  Creates triangle structure and initiates its coordinates
+ *  Initiates triangle structure's  coordinates
  *  and colors. Flag indicates whether colors are chosen at
  *  random or all to black, with zero transparency.
  *
  *  Input:
+ *      *t: pointer to triangle to be initiated.
  *      p: picture properties.
  *      *seedp: seed to be passed for random number generation.
  *      flag: 0 all are set to black, else random color.
- *
- *  Return: initiated random triangle.
  */
-Triangle_t initTriangle(Picprop_t p,unsigned int *seedp, char flag);
+void initTriangle(Triangle_t *t,Picprop_t p,unsigned int *seedp, char flag);
 
 /* COPYTRIANGLE
  *

@@ -1,12 +1,14 @@
 #pragma once
 #include "DNAPolygon.h"
 
+typedef struct Triangle_s Triangle_t;
+
 typedef struct PicGen_s{
     unsigned char *r,*g,*b; //RGB of the picture
     int width, height;      //Width and height
     unsigned char bgrgb[3]; //background RGB
     int npoly;              //number of polygons
-    struct Triangle_s *poly;//Vector of polygons
+    Triangle_t *poly;//Vector of polygons
     char flag;              //flag to see if fitness was computed
     long fitness;           //fitness
 }PicGen_t;
