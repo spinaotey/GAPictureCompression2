@@ -14,9 +14,9 @@
  *  Input:
  *      *pic: Pointer to picture to be made.
  */
-#define R(i,j) (pic->r[(i)*(pic->width)+j])
-#define G(i,j) (pic->g[(i)*(pic->width)+j])
-#define B(i,j) (pic->b[(i)*(pic->width)+j])
+#define R(i,j) (pic->r[(j)*(pic->width)+i])
+#define G(i,j) (pic->g[(j)*(pic->width)+i])
+#define B(i,j) (pic->b[(j)*(pic->width)+i])
 void makePicture(PicGen_t *pic){
     int i,j,x,y;
     unsigned char *rgba;
