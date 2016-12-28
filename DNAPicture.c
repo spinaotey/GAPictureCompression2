@@ -170,3 +170,20 @@ void initiatePicGen(PicGen_t *pic, Picprop_t tarPic){
     pic->flag = 0;
     pic->poly = malloc(sizeof(Triangle_t)*tarPic.npoly); assert(pic->poly);
 }
+
+/*  FREEPICGEN
+ *
+ *  Frees memory from PicGen_t pointer. 
+ *
+ *  Input:
+ *      *pic: PicGen to be freed.
+ */ 
+void freePicGen(PicGen_t *pic){
+    int i;
+    for(i=0;i<(pic->npoly);i++){
+        free(pic->poly[i].xFill);
+        free(pic->poly[i].yFill);
+    }
+    free(pic->poly);
+    free(pic->r); free(pic->g); free(pic->b);
+}

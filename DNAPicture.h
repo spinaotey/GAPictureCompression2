@@ -90,3 +90,12 @@ void printPicGen(PicGen_t pic, char *name);
  *      tarPic: Target picture data to be used to initiate.
  */ 
 void initiatePicGen(PicGen_t *pic, Picprop_t tarPic);
+
+/*  FREEPICGEN
+ *
+ *  Frees memory from PicGen_t pointer. 
+ *
+ *  Input:
+ *      *pic: PicGen to be freed.
+ */ 
+void freePicGen(PicGen_t *pic);

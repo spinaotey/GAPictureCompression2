@@ -57,11 +57,21 @@ int main(void){
     //Children
     for(i=0;i<nChild;i++){
         initiatePicGen(&children[i],tarPic);
-        for(j=0;j<tarPic.npoly;j++)
+        for(j=0;j<tarPic.npoly;j++){
             children[i].poly[j].flag = 0;
+            children[i].poly[j].xFill = NULL; children[i].poly[j].yFill= NULL;
+        }
     }
 
 
-
+    /*FREE MEMORY*/
+    for(i=0;i<nPop;i++)
+        freePicGen(&population[i]);
+    free(population);
+    for(i=0;i<nChild;i++)
+        freePicGen(&children[i]);
+    free(children);
+    free(tarPic.r); free(tarPic.g); free(tarPic.b); 
+    free(fitness); free(childrenFitness);
     return(0);
 }
