@@ -19,6 +19,8 @@ typedef struct Picprop_s{
     double sdCoords,sdColor;//Standard deviation of coordinates and color mutations
     double bd;              //bound differential
     unsigned char tb;       //transparency bound
+    int npoly;              //number of polygons
+    unsigned char bgrgb[3]; //background RGB
     int nMutate;            //number of polygons to mutate each time
 }Picprop_t;
 
@@ -78,3 +80,13 @@ void mutatePicGen(PicGen_t *pic, Picprop_t p, unsigned int *seedp);
  *      *name: String with output name and format.
  */ 
 void printPicGen(PicGen_t pic, char *name);
+
+/*  INITIATEPICGEN
+ *
+ *  Allocates memory for PicGen and sets parameters.
+ *
+ *  Input:
+ *      *pic: PicGen to be initiated.
+ *      tarPic: Target picture data to be used to initiate.
+ */ 
+void initiatePicGen(PicGen_t *pic, Picprop_t tarPic);

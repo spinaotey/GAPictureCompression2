@@ -1,6 +1,7 @@
 #include "DNAPicture.h"
 #include "DNAPolygon.h"
 #include "myFunctions.h"
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -148,4 +149,24 @@ void printPicGen(PicGen_t pic, char *name){
     fclose(tmp);
     sprintf(buffer,"python toImage.py %d %d tmp.dat %s",pic.width,pic.height,name);
     system(buffer);
+}
+
+/*  INITIATEPICGEN
+ *
+ *  Allocates memory for PicGen and sets parameters.
+ *
+ *  Input:
+ *      *pic: PicGen to be initiated.
+ *      tarPic: Target picture data to be used to initiate.
+ */ 
+void initiatePicGen(PicGen_t *pic, Picprop_t tarPic){
+    pic->r = malloc(sizeof(unsigned char)*tarPic.height*tarPic.width); assert(pic->r);
+    pic->g = malloc(sizeof(unsigned char)*tarPic.height*tarPic.width); assert(pic->g);
+    pic->b = malloc(sizeof(unsigned char)*tarPic.height*tarPic.width); assert(pic->b);
+    pic->width = tarPic.width;
+    pic->height = tarPic.height;
+    memcpy(pic->bgrgb,tarPic.bgrgb,sizeof(unsigned char)*3);
+    pic->npoly = tarPic.npoly;
+    pic->flag = 0;
+    pic->poly = malloc(sizeof(Triangle_t)*tarPic.npoly); assert(pic->poly);
 }
