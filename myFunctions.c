@@ -150,5 +150,5 @@ int argMinLong(long *v, int nv){
     for(i=1; i<nv; i++)
         if(v[i]<v[argmin])
             argmin = i;
-    return(i);
+    return(argmin);
 }
