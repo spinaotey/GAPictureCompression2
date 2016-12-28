@@ -133,3 +133,22 @@ void argsMinLong(long *v, int nv, int *args, int nargs){
         }
     }
 }
+
+
+/*  ARGMINLONG
+ *
+ *  Finds the argument of the smalles value in a long vector.
+ *  
+ *  Input:
+ *      *v: vector with values to find its argument.
+ *      nv: length of v.
+ *
+ *  Return: argument of the minimum value in v.
+ */
+int argMinLong(long *v, int nv){
+    int i,argmin = 0;
+    for(i=1; i<nv; i++)
+        if(v[i]<v[argmin])
+            argmin = i;
+    return(i);
+}

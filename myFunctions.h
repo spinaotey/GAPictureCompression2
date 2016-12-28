@@ -85,3 +85,15 @@ void minMaxInt(int *v, int n, int *min, int *max);
  *      nargs: number of arguments to store in args.
  */
 void argsMinLong(long *v, int nv, int *args, int nargs);
+
+/*  ARGMINLONG
+ *
+ *  Finds the argument of the smalles value in a long vector.
+ *  
+ *  Input:
+ *      *v: vector with values to find its argument.
+ *      nv: length of v.
+ *
+ *  Return: argument of the minimum value in v.
+ */
+int argMinLong(long *v, int nv);
