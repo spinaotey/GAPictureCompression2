@@ -87,7 +87,6 @@ void copyPicGen(PicGen_t *pin, PicGen_t *pout){
     memcpy(pout->r, pin->r,sizeof(unsigned char)*(pin->width)*(pin->height));
     memcpy(pout->g, pin->g,sizeof(unsigned char)*(pin->width)*(pin->height));
     memcpy(pout->b, pin->b,sizeof(unsigned char)*(pin->width)*(pin->height));
-    pout->fitness = pin->fitness;
     for(i=0; i<(pin->npoly);i++)
         copyTriangle2(&((pin->poly)[i]),&((pout->poly)[i]));
 }

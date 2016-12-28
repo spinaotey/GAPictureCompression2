@@ -152,3 +152,82 @@ int argMinLong(long *v, int nv){
             argmin = i;
     return(argmin);
 }
+
+/*  ISININT
+ *
+ *  Checks if a target value is in a vector for integers.
+ *
+ *  Input:
+ *      *v: vector to search.
+ *      nv: length of vector.
+ *      tar: target number.
+ *
+ *  Return: 1 if it is in vector, 0 if not.
+ */
+int isInInt(int *v, int nv, int tar){
+    int i;
+    for(i=0;i<nv;i++)
+        if(v[i] == tar)
+            return(1);
+    return(0);
+}
+
+/*  BOUNDEDINT
+ *
+ *  Checks if x is outside of bounds. If so, it returns boundaries.
+ *
+ *  Input:
+ *      x: value to check.
+ *      xmin: minimum value.
+ *      xmax: maximum value.
+ *
+ *  Return: x if it is inside boundaries, else boundaries.
+ */
+int boundedInt(int x, int xmin, int xmax){
+    if(x<xmin){
+        return(xmin);
+    }else if(x>xmax){
+        return(xmax);
+    }else
+        return(x);
+}
+
+/*  BOUNDEDUCHAR
+ *
+ *  Checks if x is outside of bounds. If so, it returns boundaries.
+ *
+ *  Input:
+ *      x: value to check.
+ *      xmin: minimum value.
+ *      xmax: maximum value.
+ *
+ *  Return: x if it is inside boundaries, else boundaries.
+ */
+unsigned char boundedUChar(unsigned char x, unsigned char xmin, unsigned char xmax){
+    if(x<xmin){
+        return(xmin);
+    }else if(x>xmax){
+        return(xmax);
+    }else
+        return(x);
+}
+
+/*  BOUNDEDDOUBLE
+ *
+ *  Checks if x is outside of bounds. If so, it returns boundaries.
+ *
+ *  Input:
+ *      x: value to check.
+ *      xmin: minimum value.
+ *      xmax: maximum value.
+ *
+ *  Return: x if it is inside boundaries, else boundaries.
+ */
+double boundedDouble(double x, double xmin, double xmax){
+    if(x<xmin){
+        return(xmin);
+    }else if(x>xmax){
+        return(xmax);
+    }else
+        return(x);
+}

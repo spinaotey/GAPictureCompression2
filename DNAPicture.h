@@ -10,7 +10,6 @@ typedef struct PicGen_s{
     int npoly;              //number of polygons
     Triangle_t *poly;//Vector of polygons
     char flag;              //flag to see if fitness was computed
-    long fitness;           //fitness
 }PicGen_t;
 
 typedef struct Picprop_s{

@@ -97,3 +97,55 @@ void argsMinLong(long *v, int nv, int *args, int nargs);
  *  Return: argument of the minimum value in v.
  */
 int argMinLong(long *v, int nv);
+
+/*  ISININT
+ *
+ *  Checks if a target value is in a vector for integers.
+ *
+ *  Input:
+ *      *v: vector to search.
+ *      nv: length of vector.
+ *      tar: target number.
+ *
+ *  Return: 1 if it is in vector, 0 if not.
+ */
+int isInInt(int *v, int nv, int tar);
+
+/*  BOUNDEDINT
+ *
+ *  Checks if x is outside of bounds. If so, it returns boundaries.
+ *
+ *  Input:
+ *      x: value to check.
+ *      xmin: minimum value.
+ *      xmax: maximum value.
+ *
+ *  Return: x if it is inside boundaries, else boundaries.
+ */
+int boundedInt(int x, int xmin, int xmax);
+
+/*  BOUNDEDUCHAR
+ *
+ *  Checks if x is outside of bounds. If so, it returns boundaries.
+ *
+ *  Input:
+ *      x: value to check.
+ *      xmin: minimum value.
+ *      xmax: maximum value.
+ *
+ *  Return: x if it is inside boundaries, else boundaries.
+ */
+unsigned char boundedUChar(unsigned char x, unsigned char xmin, unsigned char xmax);
+
+/*  BOUNDEDDOUBLE
+ *
+ *  Checks if x is outside of bounds. If so, it returns boundaries.
+ *
+ *  Input:
+ *      x: value to check.
+ *      xmin: minimum value.
+ *      xmax: maximum value.
+ *
+ *  Return: x if it is inside boundaries, else boundaries.
+ */
+double boundedDouble(double x, double xmin, double xmax);

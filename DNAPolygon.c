@@ -6,8 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define POSBOUND(x,xmax) x < 0 ? 0 : (x >= xmax ? (xmax-1) : x)
-
 /*  CROSSPOINT
  *
  *  Computes the intersection of one edge of the polygon at a certain "y"
@@ -101,10 +99,10 @@ void computeTriangle(Triangle_t *t){
 void mutatePoint(Triangle_t *t, Picprop_t p, unsigned int *seedp){
     int i = randInt_r(seedp,3);
     double aux;
-    aux = randNorm_r(seedp,0.,p.sdCoords);
-    t->px[i] = (int) POSBOUND((double) (t->px[i]) + aux,p.width);
-    aux = randNorm_r(seedp,0.,p.sdCoords);
-    t->py[i] = (int) POSBOUND((double) (t->py[i]) + aux,p.height);
+    aux = randNorm_r(seedp,0.,p.sdCoords)+t->px[i];
+    t->px[i] = boundedInt((int) aux,0,p.width-1);
+    aux = randNorm_r(seedp,0.,p.sdCoords)+t->py[i];
+    t->py[i] = boundedInt((int) aux,0,p.height-1);
     t->flag = 0;
 }
 
@@ -122,9 +120,9 @@ void mutatePoint(Triangle_t *t, Picprop_t p, unsigned int *seedp){
  */
 void randomPoint(int *x, int *y, Picprop_t p, unsigned int *seedp){
     *x = (int) (randUnif_r(seedp)*p.width*(1.+2.*p.bd)-p.width*p.bd);
-    *x = POSBOUND(*x,p.width);
+    *x = boundedInt(*x,0,p.width-1);
     *y = (int) (randUnif_r(seedp)*p.height*(1.+2.*p.bd)-p.height*p.bd);
-    *y = POSBOUND(*y,p.height);
+    *y = boundedInt(*y,0,p.height-1);
 }
 
 /* MUTATEPOINT2
@@ -157,11 +155,13 @@ void mutateColor(Triangle_t *t, Picprop_t p, unsigned int *seedp){
     double aux;
     int i;
     for(i=0; i<3; i++){
-        aux = randNorm_r(seedp,0.,p.sdColor);
-        t->rgba[i] = (unsigned char) POSBOUND((double) (t->rgba[i]) + aux,256);
+        aux = randNorm_r(seedp,0.,p.sdColor)+t->rgba[i];
+        aux = boundedDouble(aux,0.,255.);
+        t->rgba[i] = (unsigned char) aux;
     }
-    aux = randNorm_r(seedp,0.,p.sdColor);
-    t->rgba[3] = (unsigned char) POSBOUND((double) (t->rgba[3]) + aux,p.tb);
+    aux = randNorm_r(seedp,0.,p.sdColor)+t->rgba[3];
+    aux = boundedDouble(aux,0.,(double)p.tb);
+    t->rgba[3] = (unsigned char) aux;
 }
 
 /* MUTATECOLOR2
