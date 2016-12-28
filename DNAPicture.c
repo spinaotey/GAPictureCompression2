@@ -1,7 +1,9 @@
 #include "DNAPicture.h"
 #include "DNAPolygon.h"
 #include "myFunctions.h"
-#include "string.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /*  MAKEPICTURE
  * 
@@ -39,6 +41,7 @@ void makePicture(PicGen_t *pic){
             B(x,y) = (unsigned char) (B(x,y)*beta+rgba[2]*alpha);
         }
     }
+    pic->flag = 1;
 }
 #undef R
 #undef G
@@ -124,4 +127,25 @@ void mutatePicGen(PicGen_t *pic, Picprop_t p, unsigned int *seedp){
             }
         }
     }
+    pic->flag = 0;
+}
+
+/*  PRINTPICGEN
+ *
+ *  Creates image from PicGen_t and draws it into name file.
+ *
+ *  Input:
+ *      pic: PicGen to be drawn.
+ *      *name: String with output name and format.
+ */ 
+void printPicGen(PicGen_t pic, char *name){
+    int i;
+    FILE *tmp;
+    char buffer[200];
+    tmp = fopen("tmp.dat","w");
+    for(i=0; i < (pic.width*pic.height);i++)
+        fprintf(tmp,"%hhu,%hhu,%hhu\n",pic.r[i],pic.g[i],pic.b[i]);
+    fclose(tmp);
+    sprintf(buffer,"python toImage.py %d %d tmp.dat %s",pic.width,pic.height,name);
+    system(buffer);
 }

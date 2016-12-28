@@ -68,3 +68,13 @@ void copyPicGen(PicGen_t *pin, PicGen_t *pout);
  *      *seedp: seed for random number generation.
  */ 
 void mutatePicGen(PicGen_t *pic, Picprop_t p, unsigned int *seedp);
+
+/*  PRINTPICGEN
+ *
+ *  Creates image from PicGen_t and draws it into name file.
+ *
+ *  Input:
+ *      pic: PicGen to be drawn.
+ *      *name: String with output name and format.
+ */ 
+void printPicGen(PicGen_t pic, char *name);
