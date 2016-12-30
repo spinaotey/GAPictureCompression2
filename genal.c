@@ -14,7 +14,8 @@ int main(void){
     int nPop,nChild,nTour,nFittest;
     Picprop_t tarPic;
     PicGen_t *population,*children,bestPicGen;
-    long *fitness,*childrenFitness,bestFitness;
+    Triangle_t *taux;
+    long *fitness,*childrenFitness,bestFitness,prevFitness;
     int i,j,k;
     int argMin, *argBests;
     int parent1arg, parent2arg,crossPoint;
@@ -48,6 +49,7 @@ int main(void){
     fitness = malloc(sizeof(long)*nPop); assert(fitness);
     childrenFitness = malloc(sizeof(long)*nChild); assert(childrenFitness);
     argBests = malloc(sizeof(int)*(nFittest)); assert(argBests);
+    taux = malloc(sizeof(Triangle_t)); assert(taux);
     //Population
     for(i=0;i<nPop;i++){
         initiatePicGen(&population[i],tarPic);
@@ -59,24 +61,23 @@ int main(void){
     //Children
     for(i=0;i<nChild;i++){
         initiatePicGen(&children[i],tarPic);
-        for(j=0;j<tarPic.npoly;j++){
-            children[i].poly[j].flag = 0;
-            children[i].poly[j].xFill = NULL; children[i].poly[j].yFill= NULL;
-        }
+        for(j=0;j<tarPic.npoly;j++)
+            initTriangle(&children[i].poly[j],tarPic,&randomSeed,0);
     }
     //Best
     initiatePicGen(&bestPicGen,tarPic);
-    for(j=0;j<tarPic.npoly;j++){
-        bestPicGen.poly[j].flag = 0;
-        bestPicGen.poly[j].xFill = NULL; bestPicGen.poly[j].yFill = NULL; 
-    }
+    for(j=0;j<tarPic.npoly;j++)
+        initTriangle(&bestPicGen.poly[j],tarPic,&randomSeed,0);
     argMin = argMinLong(fitness,nPop);
     bestFitness = fitness[argMin];
+    prevFitness = bestFitness;
     fprintf(stderr,"bestFitness %ld in %d\n",fitness[argMin],argMin);
     copyPicGen(&(population[argMin]),&bestPicGen);
     printPicGen(bestPicGen,"initialbest.png");
+    initTriangle(taux,tarPic,&randomSeed,0);
     
     /*GENETIC ALGORITHM*/
+    file = fopen("genData.dat","w");
     for(i=1;i<=maxIt;i++){
         gettimeofday(&tval_before,NULL);
         for(j=0;j<nChild/2;j++){
@@ -86,9 +87,9 @@ int main(void){
             crossover(&population[parent1arg],&population[parent2arg],
                       &children[2*j],&children[2*j+1],crossPoint);
             if(randUnif_r(&randomSeed) < probMut)
-                mutatePicGen(&children[2*j],tarPic,&randomSeed);
+                mutatePicGen(&children[2*j],tarPic,taux,&randomSeed);
             if(randUnif_r(&randomSeed) < probMut)
-                mutatePicGen(&children[2*j+1],tarPic,&randomSeed);
+                mutatePicGen(&children[2*j+1],tarPic,taux,&randomSeed);
             makePicture(&children[2*j]);
             makePicture(&children[2*j+1]);
             childrenFitness[2*j] = getFitness(children[2*j],tarPic);
@@ -109,11 +110,16 @@ int main(void){
         }
         gettimeofday(&tval_after,NULL);
         timersub(&tval_after,&tval_before,&tval_result);
-        fprintf(stderr,"Iteration %d. Time: %ld.%06ld s. Current fitness: %ld.\n",i,
+        fprintf(file,"%7d %2ld.%06ld %14ld.\n",i,
                 (long int)tval_result.tv_sec,(long int)tval_result.tv_usec,
                 fitness[argMin]);
+        if(prevFitness > fitness[argMin]){
+            prevFitness = fitness[argMin];
+            sprintf(buffer1,"p%04d.png",i);
+            printPicGen(population[argMin],buffer1);
+        }
     }
-
+    fclose(file);
 
     /*FREE MEMORY*/
     for(i=0;i<nPop;i++)

@@ -1,5 +1,5 @@
 COMPILER        =       gcc
-CFLAGS          =       -O3 -g -Wall
+CFLAGS          =       -O3 -Wall -fno-stack-protector
 LFLAGS          =       -lm
 OBJECTS         =       genal.o myFunctions.o GAlib.o DNAPolygon.o DNAPicture.o
 INCLUDES        =       myFunctions.h GAlib.h DNAPolygon.h DNAPicture.h

@@ -1,5 +1,5 @@
-maxIt:200 p:0.99
-nPop:100 nChild:98 nPol:50 nMutate:25 nTour:100
+maxIt:2000 p:0.99
+nPop:20 nChild:18 nPol:250 nMutate:15 nTour:50
 background r:0 g:0 b:0
 sdCoords:80 sdColor:100
 bd:0.02 tb:60

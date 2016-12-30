@@ -63,27 +63,21 @@ void getCrosspoints(Triangle_t t, int y, float *cp){
 void computeTriangle(Triangle_t *t){
     int ylim[2];
     int i,j;
+    int cpInt[2];
     float cp[2];
-    if (t->flag != 1){
-        free(t->xFill);free(t->yFill);
-        t->xFill = malloc(sizeof(int)*50); assert(t->xFill);
-        t->yFill = malloc(sizeof(int)*50); assert(t->yFill);
-        minMaxInt(t->py,3,ylim,ylim+1);
-        t->nFill = 0;
-        for(j=ylim[0];j<=ylim[1];j++){
-            getCrosspoints(*t,j,cp);
-            for(i=cp[0];i<=cp[1];i++){
-                (t->nFill)++;
-                if((t->nFill)%50 == 0){
-                    t->xFill = realloc(t->xFill,sizeof(int)*(t->nFill+50)); assert(t->xFill);
-                    t->yFill = realloc(t->yFill,sizeof(int)*(t->nFill+50)); assert(t->yFill);
-                }
-                t->xFill[t->nFill-1] = i;
-                t->yFill[t->nFill-1] = j;
-            }
+    minMaxInt(t->py,3,ylim,ylim+1);
+    t->nFill = 0;
+    for(j=ylim[0];j<=ylim[1];j++){
+        getCrosspoints(*t,j,cp);
+        cpInt[0] = (int) cp[0];
+        cpInt[1] = (int) cp[1];
+        for(i=cpInt[0];i<=cpInt[1];i++){
+            (t->nFill)++;
+            t->xFill[t->nFill-1] = i;
+            t->yFill[t->nFill-1] = j;
         }
-        t->flag = 1;
     }
+    t->flag = 1;
 }
 
 /* MUTATEPOINT
@@ -203,7 +197,8 @@ void initTriangle(Triangle_t *t,Picprop_t p,unsigned int *seedp, char flag){
     else
         mutateColor2(t,p,seedp);
     t->nFill = 0;
-    t->xFill = NULL; t->yFill = NULL;
+    t->xFill = malloc(sizeof(int)*p.width*p.height); assert(t->xFill);
+    t->yFill = malloc(sizeof(int)*p.width*p.height); assert(t->yFill);
     t->flag = 0;
 }
 
@@ -240,12 +235,27 @@ Triangle_t copyTriangle(Triangle_t tin){
  *      *tout: triangle copying destination.
  */
 void copyTriangle2(Triangle_t *tin, Triangle_t *tout){
-    if(tout->flag == 1 && tout->nFill > 0){
+    /*if(tout->flag == 1 && tout->nFill > 0){
         free(tout->xFill); free(tout->yFill);
     }
     *tout = *tin;
     tout->xFill = malloc(tin->nFill*sizeof(int)); assert(tout->xFill);
     tout->yFill = malloc(tin->nFill*sizeof(int)); assert(tout->yFill);
     memcpy(tout->xFill,tin->xFill,sizeof(int)*(tin->nFill));
-    memcpy(tout->yFill,tin->yFill,sizeof(int)*(tin->nFill));
+    memcpy(tout->yFill,tin->yFill,sizeof(int)*(tin->nFill));*/
+    /*if(tout->xFill == NULL)
+        tout->xFill = malloc(sizeof(int)*tin->nFill);
+    else
+        tout->xFill = realloc(tout->xFill,sizeof(int)*tin->nFill);
+    if(tout->yFill == NULL)
+        tout->yFill = malloc(sizeof(int)*tin->nFill);
+    else
+        tout->yFill = realloc(tout->yFill,sizeof(int)*tin->nFill);*/
+    memcpy(tout->xFill,tin->xFill,sizeof(int)*tin->nFill);
+    memcpy(tout->yFill,tin->yFill,sizeof(int)*tin->nFill);
+    memcpy(tout->px,tin->px,sizeof(int)*3);
+    memcpy(tout->py,tin->py,sizeof(int)*3);
+    memcpy(tout->rgba,tin->rgba,sizeof(unsigned char)*4);
+    tout->nFill = tin->nFill;
+    tout->flag = tin->flag;
 }

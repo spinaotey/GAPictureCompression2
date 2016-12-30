@@ -68,7 +68,7 @@ void copyPicGen(PicGen_t *pin, PicGen_t *pout);
  *      p: PicProp with the necessary conditions for the mutation.
  *      *seedp: seed for random number generation.
  */ 
-void mutatePicGen(PicGen_t *pic, Picprop_t p, unsigned int *seedp);
+void mutatePicGen(PicGen_t *pic, Picprop_t p, Triangle_t *taux, unsigned int *seedp);
 
 /*  PRINTPICGEN
  *

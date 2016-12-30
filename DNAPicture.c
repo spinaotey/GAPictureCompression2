@@ -101,10 +101,8 @@ void copyPicGen(PicGen_t *pin, PicGen_t *pout){
  *      p: PicProp with the necessary conditions for the mutation.
  *      *seedp: seed for random number generation.
  */ 
-void mutatePicGen(PicGen_t *pic, Picprop_t p, unsigned int *seedp){
+void mutatePicGen(PicGen_t *pic, Picprop_t p, Triangle_t *taux, unsigned int *seedp){
     int i,j,k,m,n;
-    Triangle_t taux;
-    taux.flag = 0;
     for(i=0; i <p.nMutate;i++){
         j = randInt_r(seedp,3);
         k = randInt_r(seedp,pic->npoly);
@@ -115,15 +113,15 @@ void mutatePicGen(PicGen_t *pic, Picprop_t p, unsigned int *seedp){
         else{
             m = randInt_r(seedp,pic->npoly);
             if(m>k){
-                copyTriangle2(&((pic->poly)[k]),&taux);
+                copyTriangle2(&pic->poly[k],taux);
                 for(n=k+1;n<=m;n++)
-                    copyTriangle2(&((pic->poly)[n]),&((pic->poly)[n-1]));
-                copyTriangle2(&taux,&((pic->poly)[m]));
+                    copyTriangle2(&pic->poly[n],&pic->poly[n-1]);
+                copyTriangle2(taux,&pic->poly[m]);
             }else if(m<k){
-                copyTriangle2(&((pic->poly)[k]),&taux);
+                copyTriangle2(&pic->poly[k],taux);
                 for(n=k-1;n>=m;n--)
-                    copyTriangle2(&((pic->poly)[n]),&((pic->poly)[n+1]));
-                copyTriangle2(&taux,&((pic->poly)[m]));
+                    copyTriangle2(&pic->poly[n],&pic->poly[n+1]);
+                copyTriangle2(taux,&pic->poly[m]);
             }
         }
     }
