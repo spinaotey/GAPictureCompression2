@@ -3,6 +3,7 @@
 #include "GAlib.h"
 #include "myFunctions.h"
 #include <assert.h>
+#include <omp.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -16,10 +17,10 @@ int main(void){
     PicGen_t *population,*children,bestPicGen;
     Triangle_t *taux;
     long *fitness,*childrenFitness,bestFitness,prevFitness;
-    int i,j,k;
+    int i,j,k,id;
     int argMin, *argBests;
     int parent1arg, parent2arg,crossPoint;
-    unsigned int randomSeed ;
+    unsigned int randomSeed,*parallelSeed;
     struct timeval tval_before, tval_after, tval_result;
     char buffer1[200],buffer2[200];
     FILE *file;
@@ -49,7 +50,6 @@ int main(void){
     fitness = malloc(sizeof(long)*nPop); assert(fitness);
     childrenFitness = malloc(sizeof(long)*nChild); assert(childrenFitness);
     argBests = malloc(sizeof(int)*(nFittest)); assert(argBests);
-    taux = malloc(sizeof(Triangle_t)); assert(taux);
     //Population
     for(i=0;i<nPop;i++){
         initiatePicGen(&population[i],tarPic);
@@ -74,22 +74,31 @@ int main(void){
     fprintf(stderr,"bestFitness %ld in %d\n",fitness[argMin],argMin);
     copyPicGen(&(population[argMin]),&bestPicGen);
     printPicGen(bestPicGen,"initialbest.png");
-    initTriangle(taux,tarPic,&randomSeed,0);
-    
+    //Parallel
+    parallelSeed = malloc(sizeof(unsigned int)*4);
+    taux = malloc(sizeof(Triangle_t)*4);
+    for(i=0; i<4;i++){
+        parallelSeed[i] = i+randomSeed;
+        initTriangle(&taux[i],tarPic,&parallelSeed[i],0);
+    }
+
     /*GENETIC ALGORITHM*/
     file = fopen("genData.dat","w");
     for(i=1;i<=maxIt;i++){
         gettimeofday(&tval_before,NULL);
+        #pragma omp parallel for private(j,parent1arg,parent2arg,id,crossPoint) \
+                                 shared(nChild,fitness,nPop,nTour,parallelSeed,tarPic,population,children,probMut,taux,childrenFitness)
         for(j=0;j<nChild/2;j++){
-            parent1arg = tournament(fitness,nPop,nTour,&randomSeed);
-            parent2arg = tournament(fitness,nPop,nTour,&randomSeed);
-            crossPoint = randInt_r(&randomSeed,tarPic.npoly-2)+1;
+            id = omp_get_thread_num();
+            parent1arg = tournament(fitness,nPop,nTour,&parallelSeed[id]);
+            parent2arg = tournament(fitness,nPop,nTour,&parallelSeed[id]);
+            crossPoint = randInt_r(&parallelSeed[id],tarPic.npoly-2)+1;
             crossover(&population[parent1arg],&population[parent2arg],
                       &children[2*j],&children[2*j+1],crossPoint);
-            if(randUnif_r(&randomSeed) < probMut)
-                mutatePicGen(&children[2*j],tarPic,taux,&randomSeed);
-            if(randUnif_r(&randomSeed) < probMut)
-                mutatePicGen(&children[2*j+1],tarPic,taux,&randomSeed);
+            if(randUnif_r(&parallelSeed[id]) < probMut)
+                mutatePicGen(&children[2*j],tarPic,&taux[id],&randomSeed);
+            if(randUnif_r(&parallelSeed[id]) < probMut)
+                mutatePicGen(&children[2*j+1],tarPic,&taux[id],&randomSeed);
             makePicture(&children[2*j]);
             makePicture(&children[2*j+1]);
             childrenFitness[2*j] = getFitness(children[2*j],tarPic);
