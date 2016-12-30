@@ -104,7 +104,7 @@ void copyPicGen(PicGen_t *pin, PicGen_t *pout){
 void mutatePicGen(PicGen_t *pic, Picprop_t p, Triangle_t *taux, unsigned int *seedp){
     int i,j,k,m,n;
     for(i=0; i <p.nMutate;i++){
-        j = randInt_r(seedp,3);
+        j = randInt_r(seedp,2);
         k = randInt_r(seedp,pic->npoly);
         if(j==0)
             mutateColor(&((pic->poly)[k]),p,seedp);

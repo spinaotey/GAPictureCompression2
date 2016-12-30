@@ -19,7 +19,7 @@ int main(void){
     int i,j,k;
     int argMin, *argBests;
     int parent1arg, parent2arg,crossPoint;
-    unsigned int randomSeed = 0;
+    unsigned int randomSeed ;
     struct timeval tval_before, tval_after, tval_result;
     char buffer1[200],buffer2[200];
     FILE *file;
@@ -30,7 +30,7 @@ int main(void){
     fscanf(stdin,"background r:%hhu g:%hhu b:%hhu\n",&(tarPic.bgrgb[0]),&(tarPic.bgrgb[1]),&(tarPic.bgrgb[2]));
     fscanf(stdin,"sdCoords:%lf sdColor:%lf\n",&tarPic.sdCoords,&tarPic.sdColor);
     fscanf(stdin,"bd:%lf tb:%hhu\n",&tarPic.bd,&tarPic.tb);
-    fscanf(stdin,"imageName:%s",buffer1);
+    fscanf(stdin,"randSeed:%u imageName:%s",&randomSeed,buffer1);
     sprintf(buffer2,"python imgToCSV.py %s",buffer1);
     system(buffer2);
     file = fopen("target.csv","r");

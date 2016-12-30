@@ -1,6 +1,6 @@
-maxIt:2000 p:0.99
-nPop:20 nChild:18 nPol:250 nMutate:15 nTour:50
+maxIt:4000 p:0.99
+nPop:20 nChild:18 nPol:250 nMutate:50 nTour:50
 background r:0 g:0 b:0
 sdCoords:80 sdColor:100
 bd:0.02 tb:60
-imageName:monalisa.jpg
+randSeed:2 imageName:monalisa.jpg
