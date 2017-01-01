@@ -65,11 +65,11 @@ long getFitness(PicGen_t pic, Picprop_t tar){
     fitness = 0;
     for(i=0;i<(pic.width*pic.height);i++){
         d = tar.r[i] - pic.r[i];
-        fitness += POW2(d);
+        fitness += POW4(d);
         d = tar.g[i] - pic.g[i];
-        fitness += POW2(d);
+        fitness += POW4(d);
         d = tar.b[i] - pic.b[i];
-        fitness += POW2(d);
+        fitness += POW4(d);
     }
     return(fitness);
 }

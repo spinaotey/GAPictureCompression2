@@ -22,7 +22,7 @@ int main(void){
     int parent1arg, parent2arg,crossPoint;
     unsigned int randomSeed,*parallelSeed;
     struct timeval tval_before, tval_after, tval_result;
-    char buffer1[200],buffer2[200];
+    char buffer1[200],buffer2[200],buffer3[100];
     FILE *file;
     
     /*READ INPUT*/
@@ -31,6 +31,8 @@ int main(void){
     fscanf(stdin,"background r:%hhu g:%hhu b:%hhu\n",&(tarPic.bgrgb[0]),&(tarPic.bgrgb[1]),&(tarPic.bgrgb[2]));
     fscanf(stdin,"sdCoords:%lf sdColor:%lf\n",&tarPic.sdCoords,&tarPic.sdColor);
     fscanf(stdin,"bd:%lf tb:%hhu\n",&tarPic.bd,&tarPic.tb);
+    fscanf(stdin,"picSufix:%s\n",buffer3);
+    fscanf(stdin,"randSeed:%u imageName:%s",&randomSeed,buffer1);
     fscanf(stdin,"randSeed:%u imageName:%s",&randomSeed,buffer1);
     sprintf(buffer2,"python imgToCSV.py %s",buffer1);
     system(buffer2);
@@ -71,9 +73,6 @@ int main(void){
     argMin = argMinLong(fitness,nPop);
     bestFitness = fitness[argMin];
     prevFitness = bestFitness;
-    fprintf(stderr,"bestFitness %ld in %d\n",fitness[argMin],argMin);
-    copyPicGen(&(population[argMin]),&bestPicGen);
-    printPicGen(bestPicGen,"initialbest.png");
     //Parallel
     parallelSeed = malloc(sizeof(unsigned int)*4);
     taux = malloc(sizeof(Triangle_t)*4);
@@ -83,27 +82,34 @@ int main(void){
     }
 
     /*GENETIC ALGORITHM*/
-    file = fopen("genData.dat","w");
+    sprintf(buffer1,"%s.dat",buffer3);
+    file = fopen(buffer1,"w");
+    //Main Loop
     for(i=1;i<=maxIt;i++){
         gettimeofday(&tval_before,NULL);
         #pragma omp parallel for private(j,parent1arg,parent2arg,id,crossPoint) \
                                  shared(nChild,fitness,nPop,nTour,parallelSeed,tarPic,population,children,probMut,taux,childrenFitness)
         for(j=0;j<nChild/2;j++){
             id = omp_get_thread_num();
+            //Select parents at random via Tournament
             parent1arg = tournament(fitness,nPop,nTour,&parallelSeed[id]);
             parent2arg = tournament(fitness,nPop,nTour,&parallelSeed[id]);
+            //Get random crosspoint for one-point-crossover
             crossPoint = randInt_r(&parallelSeed[id],tarPic.npoly-2)+1;
             crossover(&population[parent1arg],&population[parent2arg],
                       &children[2*j],&children[2*j+1],crossPoint);
+            //Mutate randomly both children
             if(randUnif_r(&parallelSeed[id]) < probMut)
                 mutatePicGen(&children[2*j],tarPic,&taux[id],&randomSeed);
             if(randUnif_r(&parallelSeed[id]) < probMut)
                 mutatePicGen(&children[2*j+1],tarPic,&taux[id],&randomSeed);
+            //Compute their fitness and store it
             makePicture(&children[2*j]);
             makePicture(&children[2*j+1]);
             childrenFitness[2*j] = getFitness(children[2*j],tarPic);
             childrenFitness[2*j+1] = getFitness(children[2*j+1],tarPic);
         }
+        //Get fittest individuals and substitute the others with children
         argsMinLong(fitness,nPop,argBests,nFittest);
         for(j=0,k=0;j<nPop;j++){
             if(!isInInt(argBests,nFittest,j)){
@@ -112,19 +118,22 @@ int main(void){
                 k++;
             }
         }
+        //Get fittest individual of this generation and substitute if necessary
         argMin = argMinLong(fitness,nPop);
         if(fitness[argMin] < bestFitness){
             bestFitness = fitness[argMin];
             copyPicGen(&population[argMin],&bestPicGen);
         }
+        //Print time and current fitness
         gettimeofday(&tval_after,NULL);
         timersub(&tval_after,&tval_before,&tval_result);
-        fprintf(file,"%7d %2ld.%06ld %14ld.\n",i,
+        fprintf(file,"%7d %2ld.%06ld %14ld\n",i,
                 (long int)tval_result.tv_sec,(long int)tval_result.tv_usec,
                 fitness[argMin]);
-        if(prevFitness > fitness[argMin]){
+        //If 1% improved, print picture
+        if(prevFitness*0.99 > fitness[argMin]){
             prevFitness = fitness[argMin];
-            sprintf(buffer1,"p%04d.png",i);
+            sprintf(buffer1,"%s%08d.png",buffer3,i);
             printPicGen(population[argMin],buffer1);
         }
     }
