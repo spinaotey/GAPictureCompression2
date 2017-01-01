@@ -56,7 +56,7 @@ int main(void){
     
     initTriangle(taux,tarPic,&randomSeed,0);
     
-    /*GENETIC ALGORITHM*/
+    /*GENETIC PROGRAMMING*/
     sprintf(buffer1,"%s.dat",buffer3);
     file = fopen(buffer1,"w");
     for(i=1;i<=maxIt;i++){
