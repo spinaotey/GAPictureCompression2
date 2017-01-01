@@ -37,12 +37,12 @@ void makePicture(PicGen_t *pic);
 
 /*  GETFINTESS
  * 
- *  Computes fitness as the square difference in RGB channesl
- *  between target picture and PicGen.
+ *  Computes fitness as the difference to the fourth in 
+ *  RGB channesl between target picture and PicGen.
  *
  *  Input:
  *      pic: picture fitness to be computed.
- *      tar: target picture struture.
+ *      tar: target picture structure.
  *
  *  Return: Fitness value.
  */

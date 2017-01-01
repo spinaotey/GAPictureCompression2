@@ -28,12 +28,16 @@ void makePicture(PicGen_t *pic){
         pic->g[i] = pic->bgrgb[1];
         pic->b[i] = pic->bgrgb[2];
     }
+    //Superpose each triangle
     for(i=0;i<(pic->npoly);i++){
+        //If inner points of triangle are not computed
         if((pic->poly)[i].flag == 0)
             computeTriangle(&((pic->poly)[i]));
+        //Get RGBA of triangle
         rgba = (pic->poly[i]).rgba;
         alpha = (float) rgba[3]/255.f;
         beta = 1.f-alpha;
+        //Do alphacomposition for inner coordinates
         for(j=0;j<((pic->poly[i]).nFill);j++){
             x = (pic->poly[i]).xFill[j];
             y = (pic->poly[i]).yFill[j];
@@ -50,12 +54,12 @@ void makePicture(PicGen_t *pic){
 
 /*  GETFINTESS
  * 
- *  Computes fitness as the square difference in RGB channesl
- *  between target picture and PicGen.
+ *  Computes fitness as the difference to the fourth in 
+ *  RGB channesl between target picture and PicGen.
  *
  *  Input:
  *      pic: picture fitness to be computed.
- *      tar: target picture struture.
+ *      tar: target picture structure.
  *
  *  Return: Fitness value.
  */
@@ -103,13 +107,19 @@ void copyPicGen(PicGen_t *pin, PicGen_t *pout){
  */ 
 void mutatePicGen(PicGen_t *pic, Picprop_t p, Triangle_t *taux, unsigned int *seedp){
     int i,j,k,m,n;
+    //Mutate p.nMutate triangles
     for(i=0; i <p.nMutate;i++){
+        //Select type of mutation at random
         j = randInt_r(seedp,2);
+        //Select triangle at random
         k = randInt_r(seedp,pic->npoly);
+        //Mutate color
         if(j==0)
             mutateColor(&((pic->poly)[k]),p,seedp);
+        //Mutate point
         else if(j==1)
             mutatePoint(&((pic->poly)[k]),p,seedp);
+        //Change position of triangle k to position m
         else{
             m = randInt_r(seedp,pic->npoly);
             if(m>k){

@@ -14,6 +14,7 @@ typedef struct PicGen_s PicGen_t;
  *      *p2: pointer to second parent.
  *      *c1: pointer to first child.
  *      *c2: pointer to second child.
+ *      j: point to do the crossover.
  */
 void crossover(PicGen_t *p1,PicGen_t *p2,PicGen_t *c1,PicGen_t *c2, int j);
 

@@ -100,9 +100,9 @@ int main(void){
                       &children[2*j],&children[2*j+1],crossPoint);
             //Mutate randomly both children
             if(randUnif_r(&parallelSeed[id]) < probMut)
-                mutatePicGen(&children[2*j],tarPic,&taux[id],&randomSeed);
+                mutatePicGen(&children[2*j],tarPic,&taux[id],&parallelSeed[id]);
             if(randUnif_r(&parallelSeed[id]) < probMut)
-                mutatePicGen(&children[2*j+1],tarPic,&taux[id],&randomSeed);
+                mutatePicGen(&children[2*j+1],tarPic,&taux[id],&parallelSeed[id]);
             //Compute their fitness and store it
             makePicture(&children[2*j]);
             makePicture(&children[2*j+1]);
