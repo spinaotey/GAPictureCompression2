@@ -17,7 +17,7 @@ int main(void){
     int i,j,k;
     unsigned int randomSeed ;
     struct timeval tval_before, tval_after, tval_result;
-    char buffer1[200],buffer2[200];
+    char buffer1[200],buffer2[200],buffer3[100];
     FILE *file;
     
     /*READ INPUT*/
@@ -26,6 +26,7 @@ int main(void){
     fscanf(stdin,"background r:%hhu g:%hhu b:%hhu\n",&(tarPic.bgrgb[0]),&(tarPic.bgrgb[1]),&(tarPic.bgrgb[2]));
     fscanf(stdin,"sdCoords:%lf sdColor:%lf\n",&tarPic.sdCoords,&tarPic.sdColor);
     fscanf(stdin,"bd:%lf tb:%hhu\n",&tarPic.bd,&tarPic.tb);
+    fscanf(stdin,"picSufix:%s\n",buffer3);
     fscanf(stdin,"randSeed:%u imageName:%s",&randomSeed,buffer1);
     sprintf(buffer2,"python imgToCSV.py %s",buffer1);
     system(buffer2);
@@ -56,20 +57,25 @@ int main(void){
     initTriangle(taux,tarPic,&randomSeed,0);
     
     /*GENETIC ALGORITHM*/
-    file = fopen("genData.dat","w");
+    sprintf(buffer1,"%s.dat",buffer3);
+    file = fopen(buffer1,"w");
     for(i=1;i<=maxIt;i++){
         gettimeofday(&tval_before,NULL);
+        //Copy and mutate parent
         copyPicGen(&parent,&child);
         mutatePicGen(&child,tarPic,taux,&randomSeed);
+        //Compute fitness of child
         makePicture(&child);
         childFitness = getFitness(child,tarPic);
+        //If there is improvement, copy child to parent
         if(childFitness < fitness){
             fitness = childFitness;
             copyPicGen(&child,&parent);
         }
+        //If Fitness has improved 1%, print result
         if(prevFitness*0.99 > fitness){
             prevFitness = fitness;
-            sprintf(buffer1,"p%06d.png",i);
+            sprintf(buffer1,"%s%08d.png",buffer3,i);
             printPicGen(parent,buffer1);
         }
         gettimeofday(&tval_after,NULL);

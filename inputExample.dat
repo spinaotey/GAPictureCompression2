@@ -1,6 +1,7 @@
 maxIt:200000
-nPol:250 
+nPol:400
 background r:0 g:0 b:0
-sdCoords:80 sdColor:100
+sdCoords:80 sdColor:120
 bd:0.02 tb:60
-randSeed:342352352 imageName:monalisa.jpg
+picSufix:vio
+randSeed:7885259 imageName:violeta2.jpg
