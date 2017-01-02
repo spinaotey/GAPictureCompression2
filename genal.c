@@ -85,7 +85,7 @@ int main(void){
                 fitness);
     }
     fclose(file);
-    sprintf(buffer1,"%sBest.png");
+    sprintf(buffer1,"%sBest.png",buffer3);
     picPrintGen(parent,buffer1);
 
     /*FREE MEMORY*/
