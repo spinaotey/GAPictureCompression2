@@ -138,6 +138,9 @@ int main(void){
         }
     }
     fclose(file);
+    //Prints final best outcome
+    sprintf(buffer1,"%sBest.png",buffer3);
+    printPicGen(population[argMin],buffer1);
 
     /*FREE MEMORY*/
     for(i=0;i<nPop;i++)
